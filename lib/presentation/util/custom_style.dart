@@ -59,6 +59,7 @@ class CustomStyle {
     fontSize: 16,
     decoration: TextDecoration.underline,
     decorationColor: AppColors.primaryBackgroundColor,
+    decorationThickness: 2,
   );
 
   static const TextStyle buttonEorP16 =

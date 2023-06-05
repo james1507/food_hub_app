@@ -49,7 +49,7 @@ class CustomButtonWidget {
           onPressed: onPressed,
           child: Text(
             statusTextForButton,
-            style: CustomStyle.customAlready(color: colorButton),
+            style: CustomStyle.underlinePrimary16,
           ),
         ),
       ],
