@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FoodHub</string>
+    <string name="facebook_app_id">232007559535565</string>
+    <string name="fb_login_protocol_scheme">fb232007559535565</string>
+    <string name="facebook_client_token">bb49de9bde8ee323780d4eb82c121c63</string>
+</resources>

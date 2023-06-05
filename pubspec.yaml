@@ -1,0 +1,48 @@
+name: food_hub_app
+description: A new Flutter project.
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.2 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  flutter_svg: ^2.0.6
+  firebase_auth: ^4.6.2
+  firebase_core: ^2.13.1
+  cloud_firestore: ^4.8.0
+  flutter_facebook_auth: ^5.0.11
+  google_sign_in: ^6.1.3
+  flutter_riverpod: ^2.3.6
+  freezed: ^2.3.4
+  freezed_annotation: ^2.2.0
+  json_annotation: ^4.8.1
+  shared_preferences: ^2.1.1
+  reactive_forms: ^15.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  build_runner: ^2.4.4
+  json_serializable: ^6.7.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/images/splash_images/
+    - assets/images/welcome_images/
+    - assets/images/sign_up_images/
+
+  fonts:
+    - family: Sofia Pro
+      fonts:
+        - asset: assets/fonts/sofia_pro/SofiaPro-Regular.ttf
+          weight: 400
