@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:food_hub_app/firebase_options.dart';
+import 'package:food_hub_app/presentation/view/home/food_hub_screen.dart';
 import 'package:food_hub_app/presentation/view/home/home_screen.dart';
 import 'package:food_hub_app/presentation/view/login/login_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         '/welcome': (context) => const WelcomeScreen(),
         '/sign_up': (context) => const SignUpScreen(),
         '/login': (context) => const LoginScreen(),
-        '/home': (context) => const HomeScreen(),
+        '/home': (context) => const FoodHubScreen(),
       },
       initialRoute: '/',
     );

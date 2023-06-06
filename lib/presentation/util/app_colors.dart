@@ -19,4 +19,11 @@ class AppColors {
 
   static const Color vefifiCursorColor = Color(0xFFFFC529);
   static const Color hidePasswordColor = Color(0xFFD0D2D1);
+
+  static const Color appBarButtonColor = Color(0xFF111719);
+
+  static const Color notification = Color(0xFFFFC529);
+
+  static const Color textColor = Color(0xFF989CA3);
+  static const Color textColor1 = Color(0xFF30384F);
 }

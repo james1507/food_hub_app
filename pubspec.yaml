@@ -40,6 +40,12 @@ flutter:
     - assets/images/splash_images/
     - assets/images/welcome_images/
     - assets/images/sign_up_images/
+    - assets/images/sign_up_images/
+    - assets/images/home_screen_images/
+    - assets/images/home_screen_images/bottom_icons/
+    - assets/images/home_screen_images/drawer_icons/
+    - assets/images/home_screen_images/feature_images/
+    - assets/images/home_screen_images/food_icons/
 
   fonts:
     - family: Sofia Pro
