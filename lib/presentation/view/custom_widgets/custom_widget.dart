@@ -38,4 +38,24 @@ class CustomWidget {
       width: value,
     );
   }
+
+  static errorDialog(BuildContext context, {String errorString = ""}) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Error"),
+          content: Text(errorString),
+          actions: [
+            TextButton(
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

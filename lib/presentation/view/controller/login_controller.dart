@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/data/auth_data/auth_service.dart';
 import 'package:food_hub_app/model/login_model.dart';
+import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
 
 class LoginControllerNotifier extends StateNotifier<bool> {
   Ref ref;
@@ -30,12 +31,23 @@ class LoginControllerNotifier extends StateNotifier<bool> {
     } on FirebaseAuthException catch (e) {
       Navigator.of(context).pop();
       if (e.code == 'user-not-found') {
+        CustomWidget.errorDialog(context,
+            errorString: "dont found this account");
+
         log("dont found this account");
       } else if (e.code == 'wrong-password') {
-        log("wrong password");
+        CustomWidget.errorDialog(context, errorString: "wrong password");
+      } else if (e.code == 'invalid-email') {
+        CustomWidget.errorDialog(context,
+            errorString: "email address is not valid");
+
+        log("email address is not valid");
       }
     } catch (e) {
       Navigator.of(context).pop();
+      CustomWidget.errorDialog(context,
+          errorString: "An unexpected error occurred");
+
       log(e.toString());
     }
   }
@@ -54,13 +66,21 @@ class LoginControllerNotifier extends StateNotifier<bool> {
     } on FirebaseAuthException catch (e) {
       Navigator.of(context).pop();
       if (e.code == 'account-exists-with-different-credential') {
-        log("account-exists-with-different-credential");
-      } else if (e.code == 'invalid-credential') {
-        log("invalid-credential");
+        CustomWidget.errorDialog(context,
+            errorString:
+                "already exists an account with the email address asserted by the credential");
+        log("already exists an account with the email address asserted by the credential");
+      } else if (e.code == 'credential is malformed or has expired') {
+        CustomWidget.errorDialog(context,
+            errorString: "credential is malformed or has expired");
+
+        log("credential is malformed or has expired");
       }
     } catch (e) {
       Navigator.of(context).pop();
-      log("$e aaa");
+      CustomWidget.errorDialog(context,
+          errorString: "An unexpected error occurred");
+      log("$e");
     }
   }
 
@@ -71,21 +91,30 @@ class LoginControllerNotifier extends StateNotifier<bool> {
         child: CircularProgressIndicator(),
       ),
     );
+
     try {
       await ref.read(authServiceProvider).signInWithGoogle();
+
+      state = true;
     } on FirebaseAuthException catch (e) {
       Navigator.of(context).pop();
       if (e.code == 'account-exists-with-different-credential') {
-        log("account-exists-with-different-credential");
-      } else if (e.code == 'invalid-credential') {
-        log("invalid-credential");
+        CustomWidget.errorDialog(context,
+            errorString:
+                "already exists an account with the email address asserted by the credential");
+        log("already exists an account with the email address asserted by the credential");
+      } else if (e.code == 'credential is malformed or has expired') {
+        CustomWidget.errorDialog(context,
+            errorString: "credential is malformed or has expired");
+
+        log("credential is malformed or has expired");
       }
     } catch (e) {
       Navigator.of(context).pop();
-      log("$e aaa");
+      CustomWidget.errorDialog(context,
+          errorString: "An unexpected error occurred");
+      log("$e");
     }
-
-    state = true;
   }
 
   void logout() async {

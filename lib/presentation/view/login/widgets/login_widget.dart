@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
+import 'package:food_hub_app/presentation/util/strings_config.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_field_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 
 class LoginWidget {
+  static final formLoginGroup = FormGroup({
+    'email': FormControl<String>(value: '', validators: [
+      Validators.required,
+      Validators.email,
+    ]),
+    'password': FormControl<String>(validators: [
+      Validators.required,
+      Validators.minLength(8),
+    ]),
+  });
+
   static Widget formLogin({
     Key? key,
     required VoidCallback onPressed,
     bool isVisible = false,
     TextEditingController? emailController,
     TextEditingController? passwordController,
-    String? Function(String?)? validatorEmail,
-    String? Function(String?)? validatorPassword,
     String? Function(String?)? onChangedEmail,
     String? Function(String?)? onChangedPassword,
   }) {
@@ -29,7 +41,6 @@ class LoginWidget {
             CustomTextFieldWidget.customTextField(
               titleTextField: "E-mail",
               controller: emailController,
-              validator: validatorEmail,
               onChanged: onChangedEmail,
             ),
             CustomWidget.spaceH(29),
@@ -38,8 +49,47 @@ class LoginWidget {
               onPressed: onPressed,
               isVisible: isVisible,
               controller: passwordController,
-              validator: validatorPassword,
               onChanged: onChangedPassword,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static Widget reactiveFormLogin({
+    Key? key,
+    bool isVisible = false,
+    required VoidCallback onPressed,
+    TextEditingController? emailController,
+    TextEditingController? passwordController,
+    WidgetRef? ref,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 26,
+        right: 24.99,
+      ),
+      child: ReactiveForm(
+        key: key,
+        formGroup: formLoginGroup,
+        child: Column(
+          children: [
+            CustomTextFieldWidget.customReactiveTextField(
+              titleTextField: "E-mail",
+              formControlName: 'email',
+              controller: emailController,
+              validationMessages: StringConfigs.validationMessagesEmail,
+              keyboardType: TextInputType.emailAddress,
+            ),
+            CustomWidget.spaceH(29),
+            CustomTextFieldWidget.customReactivePassTextField(
+              titleTextField: "Password",
+              formControlName: 'password',
+              controller: passwordController,
+              onPressed: onPressed,
+              isVisible: isVisible,
+              validationMessages: StringConfigs.validationMessagesPassword,
             ),
           ],
         ),

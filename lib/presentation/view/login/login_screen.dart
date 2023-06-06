@@ -52,7 +52,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             CustomWidget.spaceH(100),
             CustomTextWidget.titleName("Login"),
             CustomWidget.spaceH(31),
-            LoginWidget.formLogin(
+            LoginWidget.reactiveFormLogin(
+              ref: ref,
               key: formKey,
               onPressed: () {
                 setState(
@@ -67,11 +68,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ),
             LoginWidget.loginButtonWidget(
               onPress: () {
-                if (formKey.currentState!.validate()) {
-                  ref
-                      .watch(loginControllerProvider.notifier)
-                      .loginWithEmailAndPassWord(loginModel, context);
-                }
+                ref
+                    .watch(loginControllerProvider.notifier)
+                    .loginWithEmailAndPassWord(loginModel, context);
               },
             ),
             CustomWidget.spaceH(20),
@@ -105,6 +104,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
               ],
             ),
+            CustomWidget.spaceH(20),
           ],
         ),
       ),
