@@ -6,8 +6,7 @@ import 'package:food_hub_app/data/auth_data/auth_service.dart';
 import 'package:food_hub_app/model/sign_up_model.dart';
 // import 'package:food_hub_app/data/auth_data/auth_service.dart';
 import 'package:food_hub_app/presentation/util/util.dart';
-import 'package:food_hub_app/presentation/view/controller/login_controller.dart';
-import 'package:food_hub_app/presentation/view/controller/sign_up_controller.dart';
+import 'package:food_hub_app/presentation/view/controller/auth_controller.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
@@ -34,7 +33,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(signUpControllerProvider, ((previous, next) {
+    ref.listen(authControllerProvider, ((previous, next) {
       if (next == true) {
         Navigator.pushNamed(context, '/home');
       }
@@ -49,7 +48,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             CustomWidget.spaceH(10),
             CustomTextWidget.titleName("Sign Up"),
             CustomWidget.spaceH(31),
-            SignUpWidget.formSignUp(
+            SignUpWidget.reactiveFormSignUp(
               onPressed: () {
                 setState(
                   () {
@@ -72,7 +71,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 });
 
                 ref
-                    .read(signUpControllerProvider.notifier)
+                    .read(authControllerProvider.notifier)
                     .signUpWithEmailAndPassWord(signUpModel, context);
 
                 // await signUpUser(signUpModel: signUpModel);
@@ -95,7 +94,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 CustomButtonWidget.authSocialLoginButton(
                   onPress: () {
                     ref
-                        .read(loginControllerProvider.notifier)
+                        .read(authControllerProvider.notifier)
                         .loginWithFacebook(context);
                   },
                   socialPic: ImagePaths.facebookIcon,
@@ -105,7 +104,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 CustomButtonWidget.authSocialLoginButton(
                   onPress: () {
                     ref
-                        .read(loginControllerProvider.notifier)
+                        .read(authControllerProvider.notifier)
                         .loginWithGoogle(context);
                   },
                   socialPic: ImagePaths.googleIcon,

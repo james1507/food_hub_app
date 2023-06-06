@@ -20,50 +20,12 @@ class LoginWidget {
     ]),
   });
 
-  static Widget formLogin({
-    Key? key,
-    required VoidCallback onPressed,
-    bool isVisible = false,
-    TextEditingController? emailController,
-    TextEditingController? passwordController,
-    String? Function(String?)? onChangedEmail,
-    String? Function(String?)? onChangedPassword,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 26,
-        right: 24.99,
-      ),
-      child: Form(
-        key: key,
-        child: Column(
-          children: [
-            CustomTextFieldWidget.customTextField(
-              titleTextField: "E-mail",
-              controller: emailController,
-              onChanged: onChangedEmail,
-            ),
-            CustomWidget.spaceH(29),
-            CustomTextFieldWidget.customPassTextField(
-              titleTextField: "Password",
-              onPressed: onPressed,
-              isVisible: isVisible,
-              controller: passwordController,
-              onChanged: onChangedPassword,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   static Widget reactiveFormLogin({
     Key? key,
     bool isVisible = false,
     required VoidCallback onPressed,
     TextEditingController? emailController,
     TextEditingController? passwordController,
-    WidgetRef? ref,
   }) {
     return Padding(
       padding: const EdgeInsets.only(

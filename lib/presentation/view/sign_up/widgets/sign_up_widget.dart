@@ -1,14 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
+import 'package:food_hub_app/presentation/util/strings_config.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_field_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 
 class SignUpWidget {
-  static Widget formSignUp({
-    required VoidCallback onPressed,
+  static final formLoginGroup = FormGroup({
+    'name': FormControl<String>(validators: [Validators.required]),
+    'email': FormControl<String>(value: '', validators: [
+      Validators.required,
+      Validators.email,
+    ]),
+    'password': FormControl<String>(validators: [
+      Validators.required,
+      Validators.minLength(8),
+    ]),
+  });
+
+
+
+  static Widget reactiveFormSignUp({
+    Key? key,
     bool isVisible = false,
+    required VoidCallback onPressed,
     TextEditingController? fullNameController,
     TextEditingController? emailController,
     TextEditingController? passwordController,
@@ -18,20 +35,33 @@ class SignUpWidget {
         left: 26,
         right: 24.99,
       ),
-      child: Form(
+      child: ReactiveForm(
+        key: key,
+        formGroup: formLoginGroup,
         child: Column(
           children: [
-            CustomTextFieldWidget.customTextField(
-                titleTextField: "Full name", controller: fullNameController),
+            CustomTextFieldWidget.customReactiveTextField(
+              titleTextField: "Full name",
+              formControlName: 'name',
+              controller: fullNameController,
+              validationMessages: StringConfigs.validationMessagesName,
+            ),
+            CustomTextFieldWidget.customReactiveTextField(
+              titleTextField: "E-mail",
+              formControlName: 'email',
+              controller: emailController,
+              validationMessages: StringConfigs.validationMessagesEmail,
+              keyboardType: TextInputType.emailAddress,
+            ),
             CustomWidget.spaceH(29),
-            CustomTextFieldWidget.customTextField(
-                titleTextField: "E-mail", controller: emailController),
-            CustomWidget.spaceH(29),
-            CustomTextFieldWidget.customPassTextField(
-                titleTextField: "Password",
-                controller: passwordController,
-                onPressed: onPressed,
-                isVisible: isVisible),
+            CustomTextFieldWidget.customReactivePassTextField(
+              titleTextField: "Password",
+              formControlName: 'password',
+              controller: passwordController,
+              onPressed: onPressed,
+              isVisible: isVisible,
+              validationMessages: StringConfigs.validationMessagesPassword,
+            ),
           ],
         ),
       ),

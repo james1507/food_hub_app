@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/data/auth_data/auth_service.dart';
 import 'package:food_hub_app/model/login_model.dart';
+import 'package:food_hub_app/model/sign_up_model.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
 
-class LoginControllerNotifier extends StateNotifier<bool> {
+class AuthControllerNotifier extends StateNotifier<bool> {
   Ref ref;
 
-  LoginControllerNotifier(
+  AuthControllerNotifier(
     this.ref,
   ) : super(false);
 
@@ -117,6 +118,46 @@ class LoginControllerNotifier extends StateNotifier<bool> {
     }
   }
 
+  void signUpWithEmailAndPassWord(
+      SignUpModel signUpModel, BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+    try {
+      await ref
+          .read(authServiceProvider)
+          .signUpWithEmailAndPassword(signUpModel: signUpModel);
+
+      state = true;
+    } on FirebaseAuthException catch (e) {
+      Navigator.of(context).pop();
+      if (e.code == 'email-already-in-use') {
+        CustomWidget.errorDialog(context,
+            errorString: "email address is already in use");
+
+        log("email address is already in use");
+      } else if (e.code == 'invalid-email') {
+        CustomWidget.errorDialog(context,
+            errorString: "email address is not valid");
+
+        log("email address is not valid");
+      } else if (e.code == 'weak-password') {
+        CustomWidget.errorDialog(context,
+            errorString: "password is not strong enough");
+
+        log("password is not strong enough");
+      }
+    } catch (e) {
+      Navigator.of(context).pop();
+      CustomWidget.errorDialog(context,
+          errorString: "An unexpected error occurred");
+      log("$e");
+    }
+  }
+
   void logout() async {
     await ref.read(authServiceProvider).logout();
 
@@ -126,7 +167,7 @@ class LoginControllerNotifier extends StateNotifier<bool> {
   void setState(bool value) => state;
 }
 
-final loginControllerProvider =
-    StateNotifierProvider<LoginControllerNotifier, bool>((ref) {
-  return LoginControllerNotifier(ref);
+final authControllerProvider =
+    StateNotifierProvider<AuthControllerNotifier, bool>((ref) {
+  return AuthControllerNotifier(ref);
 });

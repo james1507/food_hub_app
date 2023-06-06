@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/model/login_model.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
 import 'package:food_hub_app/presentation/util/image_paths.dart';
-import 'package:food_hub_app/presentation/view/controller/login_controller.dart';
+import 'package:food_hub_app/presentation/view/controller/auth_controller.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
@@ -31,7 +31,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(loginControllerProvider, ((previous, next) {
+    ref.listen(authControllerProvider, ((previous, next) {
       if (next == true) {
         Navigator.pushNamed(context, '/home');
       }
@@ -53,7 +53,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             CustomTextWidget.titleName("Login"),
             CustomWidget.spaceH(31),
             LoginWidget.reactiveFormLogin(
-              ref: ref,
               key: formKey,
               onPressed: () {
                 setState(
@@ -69,7 +68,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             LoginWidget.loginButtonWidget(
               onPress: () {
                 ref
-                    .watch(loginControllerProvider.notifier)
+                    .watch(authControllerProvider.notifier)
                     .loginWithEmailAndPassWord(loginModel, context);
               },
             ),
@@ -86,7 +85,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 CustomButtonWidget.authSocialLoginButton(
                   onPress: () {
                     ref
-                        .read(loginControllerProvider.notifier)
+                        .read(authControllerProvider.notifier)
                         .loginWithFacebook(context);
                   },
                   socialPic: ImagePaths.facebookIcon,
@@ -96,7 +95,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 CustomButtonWidget.authSocialLoginButton(
                   onPress: () {
                     ref
-                        .read(loginControllerProvider.notifier)
+                        .read(authControllerProvider.notifier)
                         .loginWithGoogle(context);
                   },
                   socialPic: ImagePaths.googleIcon,

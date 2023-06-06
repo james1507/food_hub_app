@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
-import 'package:food_hub_app/presentation/view/controller/login_controller.dart';
+import 'package:food_hub_app/presentation/view/controller/auth_controller.dart';
 import 'package:food_hub_app/presentation/view/home/datas/drawer_item.dart';
 import 'package:food_hub_app/presentation/view/home/home_screen.dart';
 import 'package:food_hub_app/presentation/view/home/my_order_screen.dart';
@@ -128,7 +128,7 @@ class _FoodHubScreenState extends ConsumerState<FoodHubScreen> {
                 ),
                 onPressed: () {
                   Navigator.pushNamed(context, "/login");
-                  ref.read(loginControllerProvider.notifier).logout();
+                  ref.read(authControllerProvider.notifier).logout();
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

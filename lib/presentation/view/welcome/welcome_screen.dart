@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/data/auth_data/auth_service.dart';
 import 'package:food_hub_app/presentation/util/custom_style.dart';
 import 'package:food_hub_app/presentation/util/util.dart';
-import 'package:food_hub_app/presentation/view/controller/login_controller.dart';
+import 'package:food_hub_app/presentation/view/controller/auth_controller.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
@@ -24,7 +24,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(loginControllerProvider, ((previous, next) {
+    ref.listen(authControllerProvider, ((previous, next) {
       if (next == true) {
         Navigator.pushNamed(context, '/home');
       }
@@ -62,7 +62,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                         CustomButtonWidget.authSocialLoginButton(
                           onPress: () {
                             ref
-                                .read(loginControllerProvider.notifier)
+                                .read(authControllerProvider.notifier)
                                 .loginWithFacebook(context);
                           },
                           socialPic: ImagePaths.facebookIcon,
@@ -72,7 +72,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                         CustomButtonWidget.authSocialLoginButton(
                           onPress: () {
                             ref
-                                .read(loginControllerProvider.notifier)
+                                .read(authControllerProvider.notifier)
                                 .loginWithGoogle(context);
                           },
                           socialPic: ImagePaths.googleIcon,
