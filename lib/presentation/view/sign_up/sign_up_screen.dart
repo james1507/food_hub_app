@@ -94,11 +94,6 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               children: [
                 CustomButtonWidget.authSocialLoginButton(
                   onPress: () {
-                    // AuthService.signInWithFacebook();
-
-                    // setState(() {
-                    //   initAuth();
-                    // });
                     ref
                         .read(loginControllerProvider.notifier)
                         .loginWithFacebook(context);
@@ -109,11 +104,6 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 CustomWidget.spaceW(20),
                 CustomButtonWidget.authSocialLoginButton(
                   onPress: () {
-                    // AuthService.signInWithGoogle();
-                    // setState(() {
-                    //   initAuth();
-                    // });
-
                     ref
                         .read(loginControllerProvider.notifier)
                         .loginWithGoogle(context);
@@ -123,6 +113,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 ),
               ],
             ),
+            CustomWidget.spaceH(20),
           ],
         ),
       ),

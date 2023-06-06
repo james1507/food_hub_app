@@ -31,13 +31,13 @@ class CustomButtonWidget {
     );
   }
 
-  static Widget alreadyAccountOrDont({
-    String status = "",
-    String statusTextForButton = "",
-    required VoidCallback onPressed,
-    Color color = AppColors.primaryBackgroundColor,
-    Color colorButton = AppColors.primaryBackgroundColor,
-  }) {
+  static Widget alreadyAccountOrDont(
+      {String status = "",
+      String statusTextForButton = "",
+      required VoidCallback onPressed,
+      Color color = AppColors.primaryBackgroundColor,
+      Color colorButton = AppColors.primaryBackgroundColor,
+      bool underline = false}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -49,7 +49,9 @@ class CustomButtonWidget {
           onPressed: onPressed,
           child: Text(
             statusTextForButton,
-            style: CustomStyle.underlinePrimary16,
+            style: underline
+                ? CustomStyle.underlinePrimary16
+                : CustomStyle.customAlready(color: colorButton),
           ),
         ),
       ],

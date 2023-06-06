@@ -90,6 +90,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                     CustomButtonWidget.alreadyAccountOrDont(
                       status: 'Already have an account?',
                       statusTextForButton: 'Sign In',
+                      underline: true,
                       onPressed: () {
                         Navigator.pushNamed(context, '/login');
                       },
