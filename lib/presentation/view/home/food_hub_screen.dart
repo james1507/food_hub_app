@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
-import 'package:food_hub_app/presentation/view/controller/auth_controller.dart';
+import 'package:food_hub_app/presentation/controller/auth_controller.dart';
 import 'package:food_hub_app/presentation/view/home/datas/drawer_item.dart';
 import 'package:food_hub_app/presentation/view/home/home_screen.dart';
 import 'package:food_hub_app/presentation/view/home/my_order_screen.dart';
 import 'package:food_hub_app/presentation/view/home/widgets/drawer_widget.dart';
+import 'package:food_hub_app/presentation/view/login/login_screen.dart';
 
 class FoodHubScreen extends ConsumerStatefulWidget {
   const FoodHubScreen({super.key});
@@ -22,6 +25,8 @@ class _FoodHubScreenState extends ConsumerState<FoodHubScreen> {
   DrawerItemModel item = DrawerItems.home;
   DrawerItemModel itemLogout = DrawerItems.logout;
   bool isDragging = false;
+
+  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
@@ -73,21 +78,25 @@ class _FoodHubScreenState extends ConsumerState<FoodHubScreen> {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(50.0),
-                    child: Image.asset(
-                      "assets/images/home_screen_images/big_avatar.jpg",
-                    ),
+                    child: user?.photoURL == null
+                        ? Image.asset(
+                            "assets/images/home_screen_images/big_avatar.jpg",
+                          )
+                        : Image.network(user?.photoURL ?? ""),
                   ),
-                  const Text(
-                    "Farion Wick",
-                    style: TextStyle(
+                  Text(
+                    user?.displayName ?? "Username",
+                    style: const TextStyle(
                         fontFamily: 'Sofia Pro',
                         fontSize: 20,
                         color: AppColors.welcomeSubtitleColor,
                         fontWeight: FontWeight.bold),
                   ),
-                  const Text(
-                    "farionwick@gmail.com",
-                    style: TextStyle(
+                  Text(
+                    user?.email != null
+                        ? user?.email ?? "Email"
+                        : user?.phoneNumber ?? "Phone Number",
+                    style: const TextStyle(
                       fontFamily: 'Sofia Pro',
                       fontSize: 14,
                       color: AppColors.textColor,
@@ -127,7 +136,11 @@ class _FoodHubScreenState extends ConsumerState<FoodHubScreen> {
                       const MaterialStatePropertyAll<Size>(Size(100, 40)),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, "/login");
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                    builder: (context) {
+                      return const LoginScreen();
+                    },
+                  ), ModalRoute.withName('/welcome'));
                   ref.read(authControllerProvider.notifier).logout();
                 },
                 child: Row(

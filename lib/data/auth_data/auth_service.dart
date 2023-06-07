@@ -1,8 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/model/login_model.dart';
 import 'package:food_hub_app/model/sign_up_model.dart';
+import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
+import 'package:food_hub_app/presentation/view/phone_registration/verification_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final authServiceProvider =
@@ -13,6 +17,11 @@ abstract class AuthService {
 
   Future<UserCredential> signInWithEmailAndPassword({LoginModel? loginModel});
 
+  Future<String> sendOtpPhone(BuildContext context, {String phone});
+
+  Future<UserCredential> signUpWithPhone(
+      {String? verificationId, String? smsCode});
+
   Future<UserCredential> signInWithGoogle();
 
   Future<UserCredential> signInWithFacebook();
@@ -21,10 +30,11 @@ abstract class AuthService {
 }
 
 class AuthServiceImpl implements AuthService {
+  PhoneAuthCredential? phoneAuthCredential;
+
   @override
   Future<UserCredential> signUpWithEmailAndPassword(
       {SignUpModel? signUpModel}) async {
-    // try {
     final credential =
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: signUpModel!.email!,
@@ -35,39 +45,56 @@ class AuthServiceImpl implements AuthService {
     user?.updateDisplayName(signUpModel.fullName);
 
     return credential;
-    // } on FirebaseAuthException catch (e) {
-    //   if (e.code == 'weak-password') {
-    //     return null;
-    //   } else if (e.code == 'email-already-in-use') {
-    //     return null;
-    //   }
-    // } catch (e) {
-    //   return null;
-    // }
+  }
+
+  @override
+  Future<String> sendOtpPhone(BuildContext context, {String phone = ""}) async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: phone,
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        await FirebaseAuth.instance.signInWithCredential(credential);
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        print("aaa ${e.code}");
+        if (e.code == "app-not-authorized") {
+          Navigator.of(context).pop();
+          CustomWidget.errorDialog(context, errorString: "app not authorized");
+        }
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => VerificationScreen(
+                    verificationIdReceived: verificationId,
+                  )),
+        );
+      },
+      timeout: const Duration(seconds: 10),
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
+
+    return phoneAuthCredential?.verificationId ?? "";
+  }
+
+  @override
+  Future<UserCredential> signUpWithPhone(
+      {String? verificationId, String? smsCode}) async {
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationId!, smsCode: smsCode!);
+    // Sign the user in (or link) with the credential
+    return FirebaseAuth.instance.signInWithCredential(credential);
   }
 
   @override
   Future<UserCredential> signInWithEmailAndPassword(
       {LoginModel? loginModel}) async {
-    // try {
     final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: loginModel?.email ?? "",
       password: loginModel?.password ?? "",
     );
 
     return credential;
-    // } on FirebaseAuthException catch (e) {
-    //   if (e.code == 'user-not-found') {
-    //     log("dont find your account");
-    //     return null;
-    //   } else if (e.code == 'wrong-password') {
-    //     log("wrong password");
-    //     return null;
-    //   } else {
-    //     log(e.code);
-    //     return null;
-    //   }
-    // }
   }
 
   @override
@@ -99,5 +126,4 @@ class AuthServiceImpl implements AuthService {
   logout() async {
     FirebaseAuth.instance.signOut();
   }
-  // return null;
 }

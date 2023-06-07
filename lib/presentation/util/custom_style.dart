@@ -125,6 +125,18 @@ class CustomStyle {
     );
   }
 
+  static ButtonStyle backButton = ButtonStyle(
+    padding: const MaterialStatePropertyAll(EdgeInsets.only(left: 5)),
+    backgroundColor: const MaterialStatePropertyAll<Color>(
+      AppColors.primaryBackgroundColor,
+    ),
+    shape: MaterialStatePropertyAll(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(13.0),
+      ),
+    ),
+  );
+
   // Gradian Style
 
   static Gradient gradientWelcome = LinearGradient(
@@ -151,6 +163,37 @@ class CustomStyle {
       ),
     ),
     enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(
+        width: 1,
+        color: AppColors.borderOffTextFieldColor,
+      ),
+      borderRadius: BorderRadius.all(
+        Radius.circular(10),
+      ),
+    ),
+  );
+
+  static InputDecoration textFieldPhoneStyle = const InputDecoration(
+    border: OutlineInputBorder(),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(
+        width: 1,
+        color: AppColors.borderOffTextFieldColor,
+      ),
+      borderRadius: BorderRadius.all(
+        Radius.circular(10),
+      ),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(
+        width: 1,
+        color: AppColors.borderOffTextFieldColor,
+      ),
+      borderRadius: BorderRadius.all(
+        Radius.circular(10),
+      ),
+    ),
+    errorBorder: OutlineInputBorder(
       borderSide: BorderSide(
         width: 1,
         color: AppColors.borderOffTextFieldColor,

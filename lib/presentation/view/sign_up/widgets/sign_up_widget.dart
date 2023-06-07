@@ -20,8 +20,6 @@ class SignUpWidget {
     ]),
   });
 
-
-
   static Widget reactiveFormSignUp({
     Key? key,
     bool isVisible = false,
@@ -87,6 +85,16 @@ class SignUpWidget {
     return CustomButtonWidget.alreadyAccountOrDont(
       status: 'Already have an account?',
       statusTextForButton: 'Login',
+      onPressed: onPressed,
+      color: AppColors.primaryTitleColor,
+      colorButton: AppColors.primaryColor,
+    );
+  }
+
+  static Widget signUpWithPhoneNumber({required VoidCallback onPressed}) {
+    return CustomButtonWidget.alreadyAccountOrDont(
+      status: 'Sign up with phone number?',
+      statusTextForButton: 'Click here',
       onPressed: onPressed,
       color: AppColors.primaryTitleColor,
       colorButton: AppColors.primaryColor,

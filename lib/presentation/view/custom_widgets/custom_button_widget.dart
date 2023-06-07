@@ -79,4 +79,24 @@ class CustomButtonWidget {
       ),
     );
   }
+
+  static Widget backButton({required VoidCallback onPressed}) {
+    return Container(
+      height: 38,
+      width: 38,
+      margin: const EdgeInsets.only(
+        left: 20,
+        top: 35,
+      ),
+      child: ElevatedButton(
+        style: CustomStyle.backButton,
+        onPressed: onPressed,
+        child: const Icon(
+          Icons.arrow_back_ios,
+          color: AppColors.textColor1,
+          size: 16,
+        ),
+      ),
+    );
+  }
 }

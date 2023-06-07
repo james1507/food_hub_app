@@ -33,6 +33,24 @@ class CustomTextFieldWidget {
     );
   }
 
+  static Widget customPhoneReactiveTextField({
+    String titleTextField = "",
+    String formControlName = "",
+    TextEditingController? controller,
+    String? Function(String?)? onChanged,
+    Map<String, String Function(Object)>? validationMessages,
+    TextInputType? keyboardType,
+  }) {
+    return ReactiveTextField(
+      formControlName: formControlName,
+      decoration: CustomStyle.textFieldPhoneStyle,
+      controller: controller,
+      onChanged: (value) => onChanged,
+      validationMessages: validationMessages,
+      keyboardType: keyboardType,
+    );
+  }
+
   static Widget customReactivePassTextField({
     bool isVisible = false,
     String titleTextField = "",

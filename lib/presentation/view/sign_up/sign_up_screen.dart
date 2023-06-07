@@ -6,7 +6,7 @@ import 'package:food_hub_app/data/auth_data/auth_service.dart';
 import 'package:food_hub_app/model/sign_up_model.dart';
 // import 'package:food_hub_app/data/auth_data/auth_service.dart';
 import 'package:food_hub_app/presentation/util/util.dart';
-import 'package:food_hub_app/presentation/view/controller/auth_controller.dart';
+import 'package:food_hub_app/presentation/controller/auth_controller.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
@@ -69,21 +69,30 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       fullName: fullNameController.text,
                       password: passwordController.text);
                 });
-
-                ref
-                    .read(authControllerProvider.notifier)
-                    .signUpWithEmailAndPassWord(signUpModel, context);
+                if (SignUpWidget.formLoginGroup.valid) {
+                  ref
+                      .read(authControllerProvider.notifier)
+                      .signUpWithEmailAndPassWord(signUpModel, context);
+                } else {
+                  CustomWidget.errorDialog(context,
+                      errorString: "Please enter done input");
+                }
 
                 // await signUpUser(signUpModel: signUpModel);
               },
             ),
-            CustomWidget.spaceH(20),
+            CustomWidget.spaceH(10),
+            SignUpWidget.signUpWithPhoneNumber(
+              onPressed: () {
+                Navigator.pushNamed(context, '/sign_up_phone');
+              },
+            ),
             SignUpWidget.alreadyAccountQuestion(
               onPressed: () {
                 Navigator.pushNamed(context, '/login');
               },
             ),
-            CustomWidget.spaceH(20),
+            CustomWidget.spaceH(10),
             CustomTextWidget.signInWith(
                 colorText: AppColors.titleTextFieldColor,
                 colorLine: AppColors.titleTextFieldColor),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
 import 'package:food_hub_app/presentation/util/strings_config.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widget.dart';
@@ -19,6 +18,8 @@ class LoginWidget {
       Validators.minLength(8),
     ]),
   });
+
+  
 
   static Widget reactiveFormLogin({
     Key? key,

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -16,6 +17,8 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   int _selectedIndex = 0;
+
+  User? user = FirebaseAuth.instance.currentUser;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -39,10 +42,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 children: [
                   DrawerMenuWidget(onClicked: widget.openDrawer),
                   _buildChooseAddress(),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: Image.asset(
-                      "assets/images/home_screen_images/app_bar_avatar.png",
+                  SizedBox(
+                    height: 38,
+                    width: 38,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: user?.photoURL == null
+                          ? Image.asset(
+                              "assets/images/home_screen_images/app_bar_avatar.png",
+                            )
+                          : Image.network(user?.photoURL ?? ""),
                     ),
                   ),
                 ],
@@ -573,7 +582,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 class CategoriesWidget extends StatefulWidget {
   late bool isClick;
 
-  CategoriesWidget({super.key, required this.isClick});
+  CategoriesWidget({super.key, this.isClick = true});
 
   @override
   State<CategoriesWidget> createState() => _CategoriesWidgetState();

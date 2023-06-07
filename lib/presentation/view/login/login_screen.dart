@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/model/login_model.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
 import 'package:food_hub_app/presentation/util/image_paths.dart';
-import 'package:food_hub_app/presentation/view/controller/auth_controller.dart';
+import 'package:food_hub_app/presentation/controller/auth_controller.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
@@ -48,7 +48,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomWidget.topImage(context),
+            Stack(
+              children: [
+                CustomWidget.topImage(context),
+                CustomButtonWidget.backButton(
+                  onPressed: () {},
+                ),
+              ],
+            ),
             CustomWidget.spaceH(100),
             CustomTextWidget.titleName("Login"),
             CustomWidget.spaceH(31),
@@ -67,9 +74,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ),
             LoginWidget.loginButtonWidget(
               onPress: () {
-                ref
-                    .watch(authControllerProvider.notifier)
-                    .loginWithEmailAndPassWord(loginModel, context);
+                if (LoginWidget.formLoginGroup.valid == true) {
+                  ref
+                      .watch(authControllerProvider.notifier)
+                      .loginWithEmailAndPassWord(loginModel, context);
+                } else {
+                  CustomWidget.errorDialog(context,
+                      errorString: "Please enter done input");
+                }
               },
             ),
             CustomWidget.spaceH(20),

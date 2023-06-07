@@ -10,6 +10,7 @@ class SignUpModel with _$SignUpModel {
     String? id,
     String? fullName,
     String? email,
+    String? phoneNumber,
     String? password,
   }) = _SignUpModel;
 

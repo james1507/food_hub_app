@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/data/auth_data/auth_service.dart';
 import 'package:food_hub_app/model/login_model.dart';
 import 'package:food_hub_app/model/sign_up_model.dart';
+import 'package:food_hub_app/presentation/controller/phone_verification_controller.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
 
 class AuthControllerNotifier extends StateNotifier<bool> {
@@ -49,6 +50,34 @@ class AuthControllerNotifier extends StateNotifier<bool> {
       CustomWidget.errorDialog(context,
           errorString: "An unexpected error occurred");
 
+      log(e.toString());
+    }
+  }
+
+  void signUpWithPhone(BuildContext context,
+      {String? verificationId, String? smsCode}) async {
+    try {
+      showDialog(
+        context: context,
+        builder: (context) => const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+      await ref
+          .read(authServiceProvider)
+          .signUpWithPhone(verificationId: verificationId, smsCode: smsCode);
+      state = true;
+    } on FirebaseAuthException catch (e) {
+      Navigator.of(context).pop();
+      if (e.code == 'invalid-phone-number') {
+        CustomWidget.errorDialog(context,
+            errorString: "The provided phone number is not valid.");
+        log("The provided phone number is not valid.");
+      }
+    } catch (e) {
+      Navigator.of(context).pop();
+      CustomWidget.errorDialog(context,
+          errorString: "An unexpected error occurred");
       log(e.toString());
     }
   }

@@ -12,4 +12,9 @@ class StringConfigs {
     'required': (error) => 'The password must not be empty',
     'minLength': (error) => 'The password must have at least 8 characters'
   };
+
+  static Map<String, String Function(Object)> validationMessagesPhone = {
+    'required': (error) => 'The phone must not be empty',
+    'minLength': (error) => 'The phone must have 10 characters'
+  };
 }

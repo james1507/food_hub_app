@@ -23,6 +23,7 @@ mixin _$SignUpModel {
   String? get id => throw _privateConstructorUsedError;
   String? get fullName => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
+  String? get phoneNumber => throw _privateConstructorUsedError;
   String? get password => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,7 +38,12 @@ abstract class $SignUpModelCopyWith<$Res> {
           SignUpModel value, $Res Function(SignUpModel) then) =
       _$SignUpModelCopyWithImpl<$Res, SignUpModel>;
   @useResult
-  $Res call({String? id, String? fullName, String? email, String? password});
+  $Res call(
+      {String? id,
+      String? fullName,
+      String? email,
+      String? phoneNumber,
+      String? password});
 }
 
 /// @nodoc
@@ -56,6 +62,7 @@ class _$SignUpModelCopyWithImpl<$Res, $Val extends SignUpModel>
     Object? id = freezed,
     Object? fullName = freezed,
     Object? email = freezed,
+    Object? phoneNumber = freezed,
     Object? password = freezed,
   }) {
     return _then(_value.copyWith(
@@ -70,6 +77,10 @@ class _$SignUpModelCopyWithImpl<$Res, $Val extends SignUpModel>
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phoneNumber: freezed == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
               as String?,
       password: freezed == password
           ? _value.password
@@ -87,7 +98,12 @@ abstract class _$$_SignUpModelCopyWith<$Res>
       __$$_SignUpModelCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? id, String? fullName, String? email, String? password});
+  $Res call(
+      {String? id,
+      String? fullName,
+      String? email,
+      String? phoneNumber,
+      String? password});
 }
 
 /// @nodoc
@@ -104,6 +120,7 @@ class __$$_SignUpModelCopyWithImpl<$Res>
     Object? id = freezed,
     Object? fullName = freezed,
     Object? email = freezed,
+    Object? phoneNumber = freezed,
     Object? password = freezed,
   }) {
     return _then(_$_SignUpModel(
@@ -119,6 +136,10 @@ class __$$_SignUpModelCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
+      phoneNumber: freezed == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
       password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
@@ -130,7 +151,8 @@ class __$$_SignUpModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_SignUpModel with DiagnosticableTreeMixin implements _SignUpModel {
-  const _$_SignUpModel({this.id, this.fullName, this.email, this.password});
+  const _$_SignUpModel(
+      {this.id, this.fullName, this.email, this.phoneNumber, this.password});
 
   factory _$_SignUpModel.fromJson(Map<String, dynamic> json) =>
       _$$_SignUpModelFromJson(json);
@@ -142,11 +164,13 @@ class _$_SignUpModel with DiagnosticableTreeMixin implements _SignUpModel {
   @override
   final String? email;
   @override
+  final String? phoneNumber;
+  @override
   final String? password;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SignUpModel(id: $id, fullName: $fullName, email: $email, password: $password)';
+    return 'SignUpModel(id: $id, fullName: $fullName, email: $email, phoneNumber: $phoneNumber, password: $password)';
   }
 
   @override
@@ -157,6 +181,7 @@ class _$_SignUpModel with DiagnosticableTreeMixin implements _SignUpModel {
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('fullName', fullName))
       ..add(DiagnosticsProperty('email', email))
+      ..add(DiagnosticsProperty('phoneNumber', phoneNumber))
       ..add(DiagnosticsProperty('password', password));
   }
 
@@ -169,13 +194,16 @@ class _$_SignUpModel with DiagnosticableTreeMixin implements _SignUpModel {
             (identical(other.fullName, fullName) ||
                 other.fullName == fullName) &&
             (identical(other.email, email) || other.email == email) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber) &&
             (identical(other.password, password) ||
                 other.password == password));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, fullName, email, password);
+  int get hashCode =>
+      Object.hash(runtimeType, id, fullName, email, phoneNumber, password);
 
   @JsonKey(ignore: true)
   @override
@@ -196,6 +224,7 @@ abstract class _SignUpModel implements SignUpModel {
       {final String? id,
       final String? fullName,
       final String? email,
+      final String? phoneNumber,
       final String? password}) = _$_SignUpModel;
 
   factory _SignUpModel.fromJson(Map<String, dynamic> json) =
@@ -207,6 +236,8 @@ abstract class _SignUpModel implements SignUpModel {
   String? get fullName;
   @override
   String? get email;
+  @override
+  String? get phoneNumber;
   @override
   String? get password;
   @override
