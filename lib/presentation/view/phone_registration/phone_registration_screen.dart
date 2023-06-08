@@ -1,9 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/model/sign_up_model.dart';
 import 'package:food_hub_app/presentation/controller/auth_controller.dart';
-import 'package:food_hub_app/presentation/controller/phone_verification_controller.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
@@ -44,6 +44,7 @@ class _PhoneRegistrationScreenState
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       backgroundColor: AppColors.primaryBackgroundColor,
       body: LayoutBuilder(
@@ -175,12 +176,10 @@ class _PhoneRegistrationScreenState
                         PhoneResWidget.loginButtonWidget(
                           onPress: () {
                             if (checkPhoneType == true) {
-                              ref
-                                  .read(
-                                      verificationIdControllerProvider.notifier)
-                                  .sendOtpCode(context,
-                                      phone:
-                                          "${listCountryCodePhone[dropDownIndex].values.toString().replaceAll("(", "").replaceAll(")", "")}${phoneTextField.text}");
+                              ref.read(authControllerProvider.notifier).sendOtpCode(
+                                  context,
+                                  phone:
+                                      "${listCountryCodePhone[dropDownIndex].values.toString().replaceAll("(", "").replaceAll(")", "")}${phoneTextField.text}");
                             } else {
                               setState(() {
                                 checkPhoneTypeText = "invalid value";

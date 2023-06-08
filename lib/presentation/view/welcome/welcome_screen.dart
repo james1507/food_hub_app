@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/presentation/util/custom_style.dart';
@@ -28,7 +30,11 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
   Widget build(BuildContext context) {
     ref.listen(authControllerProvider, ((previous, next) {
       if (next == true) {
-        Navigator.pushNamed(context, '/home');
+        if (FirebaseAuth.instance.currentUser?.phoneNumber == null) {
+          Navigator.pushNamed(context, '/verification_email');
+        } else {
+          Navigator.pushNamed(context, '/home');
+        }
       }
     }));
     return WillPopScope(

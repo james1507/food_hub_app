@@ -6,6 +6,7 @@ import 'package:food_hub_app/presentation/view/login/login_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/presentation/view/phone_registration/phone_registration_screen.dart';
 import 'package:food_hub_app/presentation/view/phone_registration/verification_screen.dart';
+import 'package:food_hub_app/presentation/view/sign_up/verification_email_screen.dart';
 
 import 'package:food_hub_app/presentation/view/view.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const SplashScreen(),
         '/welcome': (context) => const WelcomeScreen(),
         '/sign_up': (context) => const SignUpScreen(),
+        '/verification_email': (context) => const VerificationEmailScreen(),
         '/sign_up_phone': (context) => const PhoneRegistrationScreen(),
         '/verification': (context) => const VerificationScreen(),
         '/login': (context) => const LoginScreen(),

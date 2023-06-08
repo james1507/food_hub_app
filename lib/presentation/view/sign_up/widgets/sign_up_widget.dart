@@ -100,4 +100,38 @@ class SignUpWidget {
       colorButton: AppColors.primaryColor,
     );
   }
+
+  static Widget resendButtonWidget({required VoidCallback onPress}) {
+    return Center(
+      child: CustomButtonWidget.customButton(
+        height: 60,
+        width: 248,
+        marginButton: const EdgeInsets.only(
+          right: 30,
+        ),
+        backgroundColor: AppColors.primaryColor,
+        boderRadius: 30,
+        onPress: onPress,
+        widget: CustomTextWidget.textCustom(
+            text: 'RESEND EMAIL', color: AppColors.primaryBackgroundColor),
+      ),
+    );
+  }
+
+  static Widget cancelButton({required VoidCallback onPress}) {
+    return Center(
+      child: CustomButtonWidget.customButton(
+        height: 40,
+        width: 100,
+        marginButton: const EdgeInsets.only(
+          right: 30,
+        ),
+        backgroundColor: AppColors.primaryBackgroundColor,
+        boderRadius: 30,
+        onPress: onPress,
+        widget: CustomTextWidget.textCustom(
+            text: 'CANCEL', color: AppColors.primaryColor),
+      ),
+    );
+  }
 }

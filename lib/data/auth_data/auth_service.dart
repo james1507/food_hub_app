@@ -1,6 +1,7 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/model/login_model.dart';
@@ -9,8 +10,7 @@ import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart
 import 'package:food_hub_app/presentation/view/phone_registration/verification_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-final authServiceProvider =
-    Provider.autoDispose<AuthService>((ref) => AuthServiceImpl());
+final authServiceProvider = Provider<AuthService>((ref) => AuthServiceImpl());
 
 abstract class AuthService {
   Future<UserCredential> signUpWithEmailAndPassword({SignUpModel? signUpModel});
@@ -43,6 +43,8 @@ class AuthServiceImpl implements AuthService {
 
     User? user = credential.user;
     user?.updateDisplayName(signUpModel.fullName);
+
+    await FirebaseAuth.instance.currentUser?.sendEmailVerification();
 
     return credential;
   }
@@ -99,23 +101,35 @@ class AuthServiceImpl implements AuthService {
 
   @override
   Future<UserCredential> signInWithGoogle() async {
-    final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    final GoogleSignInAuthentication gAuth = await gUser!.authentication;
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
 
     final credential = GoogleAuthProvider.credential(
-      accessToken: gAuth.accessToken,
-      idToken: gAuth.idToken,
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
     );
 
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    return await FirebaseAuth.instance
+        .signInWithCredential(credential)
+        .then((value) async {
+      try {
+        await value.user?.sendEmailVerification();
+      } on FirebaseAuthException catch (e) {
+        log(e.code);
+      } catch (e) {
+        log(e.toString());
+      }
+
+      return value;
+    });
   }
 
   @override
   Future<UserCredential> signInWithFacebook() async {
     final LoginResult result = await FacebookAuth.instance.login();
 
-    // if (result.status == LoginStatus.success) {
     final OAuthCredential credential =
         FacebookAuthProvider.credential(result.accessToken!.token);
 

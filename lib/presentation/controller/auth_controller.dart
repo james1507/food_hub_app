@@ -3,10 +3,11 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:food_hub_app/data/auth_data/auth_service.dart';
 import 'package:food_hub_app/model/login_model.dart';
 import 'package:food_hub_app/model/sign_up_model.dart';
-import 'package:food_hub_app/presentation/controller/phone_verification_controller.dart';
+import 'package:food_hub_app/presentation/util/app_colors.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
 
 class AuthControllerNotifier extends StateNotifier<bool> {
@@ -82,6 +83,16 @@ class AuthControllerNotifier extends StateNotifier<bool> {
     }
   }
 
+  void sendOtpCode(BuildContext context, {String phone = ""}) async {
+    showDialog(
+      context: context,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+    await ref.read(authServiceProvider).sendOtpPhone(context, phone: phone);
+  }
+
   void loginWithFacebook(BuildContext context) async {
     showDialog(
       context: context,
@@ -115,14 +126,13 @@ class AuthControllerNotifier extends StateNotifier<bool> {
   }
 
   void loginWithGoogle(BuildContext context) async {
-    showDialog(
-      context: context,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-
     try {
+      showDialog(
+        context: context,
+        builder: (context) => const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
       await ref.read(authServiceProvider).signInWithGoogle();
 
       state = true;
@@ -160,6 +170,8 @@ class AuthControllerNotifier extends StateNotifier<bool> {
           .read(authServiceProvider)
           .signUpWithEmailAndPassword(signUpModel: signUpModel);
 
+      
+
       state = true;
     } on FirebaseAuthException catch (e) {
       Navigator.of(context).pop();
@@ -186,6 +198,23 @@ class AuthControllerNotifier extends StateNotifier<bool> {
       log("$e");
     }
   }
+
+  // void verifyEmail() async {
+  //   try {
+  //     await ref.read(authServiceProvider).verifyEmail();
+  //   } catch (e) {
+  //     print(e.toString());
+  //     Fluttertoast.showToast(
+  //       msg: "$e",
+  //       toastLength: Toast.LENGTH_SHORT,
+  //       gravity: ToastGravity.BOTTOM,
+  //       timeInSecForIosWeb: 1,
+  //       backgroundColor: AppColors.primaryBackgroundColor,
+  //       textColor: AppColors.primaryTitleColor,
+  //       fontSize: 16.0,
+  //     );
+  //   }
+  // }
 
   void logout() async {
     await ref.read(authServiceProvider).logout();

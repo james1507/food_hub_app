@@ -1,5 +1,6 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/data/auth_data/auth_service.dart';
@@ -35,10 +36,13 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   Widget build(BuildContext context) {
     ref.listen(authControllerProvider, ((previous, next) {
       if (next == true) {
-        Navigator.pushNamed(context, '/home');
+        if (FirebaseAuth.instance.currentUser?.phoneNumber == null) {
+          Navigator.pushNamed(context, '/verification_email');
+        } else {
+          Navigator.pushNamed(context, '/home');
+        }
       }
     }));
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
