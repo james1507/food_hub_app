@@ -1,11 +1,16 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:food_hub_app/presentation/util/util.dart';
 import 'package:food_hub_app/presentation/view/home/datas/food_item.dart';
 import 'package:food_hub_app/presentation/view/home/widgets/drawer_menu_widget.dart';
 import 'package:food_hub_app/presentation/view/login/widgets/login_widget.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   final VoidCallback openDrawer;
@@ -18,6 +23,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   int _selectedIndex = 0;
+  var presscount = 0;
 
   User? user = FirebaseAuth.instance.currentUser;
 
@@ -37,234 +43,263 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20, top: 30, right: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  DrawerMenuWidget(onClicked: widget.openDrawer),
-                  _buildChooseAddress(),
-                  SizedBox(
-                    height: 38,
-                    width: 38,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: user?.photoURL == null
-                          ? Image.asset(
-                              "assets/images/home_screen_images/app_bar_avatar.png",
-                            )
-                          : Image.network(user?.photoURL ?? ""),
+    return WillPopScope(
+      onWillPop: () async {
+        presscount++;
+
+        Future.delayed(
+          const Duration(seconds: 4),
+          () => presscount = 0,
+        );
+
+        if (presscount == 2) {
+          exit(0);
+        } else {
+          Fluttertoast.showToast(
+            msg: AppLocalizations.of(context)!.messageExit,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: AppColors.primaryBackgroundColor,
+            textColor: AppColors.primaryTitleColor,
+            fontSize: 16.0,
+          );
+          // var snackBar = const SnackBar(
+          //     content:
+          //         Center(child: Text('press another time to exit from app')));
+          // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          return false;
+        }
+      },
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, top: 30, right: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    DrawerMenuWidget(onClicked: widget.openDrawer),
+                    _buildChooseAddress(),
+                    SizedBox(
+                      height: 38,
+                      width: 38,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: user?.photoURL == null
+                            ? Image.asset(
+                                "assets/images/home_screen_images/app_bar_avatar.png",
+                              )
+                            : Image.network(user?.photoURL ?? ""),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              const Text(
-                "What would you like\nto order",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 32,
+                  ],
                 ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              _buildFindFoodAndFilter(),
-              const SizedBox(
-                height: 25,
-              ),
-              CategoriesWidget(
-                isClick: isClick,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Featured Restaurants",
-                    style: TextStyle(
-                        fontFamily: 'Sofia Pro',
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+                const SizedBox(
+                  height: 25,
+                ),
+                const Text(
+                  "What would you like\nto order",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 32,
                   ),
-                  TextButton(
-                    style: const ButtonStyle(
-                        foregroundColor:
-                            MaterialStatePropertyAll(AppColors.primaryColor)),
-                    onPressed: () {},
-                    child: const Text(
-                      "View All >",
-                      style: TextStyle(fontFamily: 'Sofia Pro'),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                _buildFindFoodAndFilter(),
+                const SizedBox(
+                  height: 25,
+                ),
+                CategoriesWidget(
+                  isClick: isClick,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Featured Restaurants",
+                      style: TextStyle(
+                          fontFamily: 'Sofia Pro',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
                     ),
-                  ),
-                ],
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(children: [
-                  _featuredRestaurants(),
-                  _featuredRestaurants(),
-                  _featuredRestaurants(),
-                  _featuredRestaurants(),
-                ]),
-              ),
-            ],
+                    TextButton(
+                      style: const ButtonStyle(
+                          foregroundColor:
+                              MaterialStatePropertyAll(AppColors.primaryColor)),
+                      onPressed: () {},
+                      child: const Text(
+                        "View All >",
+                        style: TextStyle(fontFamily: 'Sofia Pro'),
+                      ),
+                    ),
+                  ],
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(children: [
+                    _featuredRestaurants(),
+                    _featuredRestaurants(),
+                    _featuredRestaurants(),
+                    _featuredRestaurants(),
+                  ]),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-                "assets/images/home_screen_images/bottom_icons/icon1_off.svg"),
-            activeIcon: SvgPicture.asset(
-                "assets/images/home_screen_images/bottom_icons/icon1_on.svg"),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-                "assets/images/home_screen_images/bottom_icons/icon2_off.svg"),
-            activeIcon: SvgPicture.asset(
-                "assets/images/home_screen_images/bottom_icons/icon2_on.svg"),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Stack(
-              children: [
-                SvgPicture.asset(
-                    "assets/images/home_screen_images/bottom_icons/icon3_off.svg"),
-                Container(
-                  margin: const EdgeInsets.only(left: 18, bottom: 15),
-                  padding: const EdgeInsets.all(1),
-                  decoration: BoxDecoration(
-                    color: AppColors.notification,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  constraints: const BoxConstraints(
-                    minWidth: 12,
-                    minHeight: 12,
-                  ),
-                  child: const Text(
-                    '4',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 8,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              ],
+        bottomNavigationBar: BottomNavigationBar(
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                  "assets/images/home_screen_images/bottom_icons/icon1_off.svg"),
+              activeIcon: SvgPicture.asset(
+                  "assets/images/home_screen_images/bottom_icons/icon1_on.svg"),
+              label: 'Home',
             ),
-            activeIcon: Stack(
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(
-                    top: 5,
-                  ),
-                  child: SvgPicture.asset(
-                      "assets/images/home_screen_images/bottom_icons/icon3_on.svg"),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 18, bottom: 15),
-                  padding: const EdgeInsets.all(1),
-                  decoration: BoxDecoration(
-                    color: AppColors.notification,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  constraints: const BoxConstraints(
-                    minWidth: 12,
-                    minHeight: 12,
-                  ),
-                  child: const Text(
-                    '4',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 8,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              ],
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                  "assets/images/home_screen_images/bottom_icons/icon2_off.svg"),
+              activeIcon: SvgPicture.asset(
+                  "assets/images/home_screen_images/bottom_icons/icon2_on.svg"),
+              label: 'Home',
             ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-                "assets/images/home_screen_images/bottom_icons/icon4_off.svg"),
-            activeIcon: SvgPicture.asset(
-                "assets/images/home_screen_images/bottom_icons/icon4_on.svg"),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Stack(
-              children: [
-                SvgPicture.asset(
-                    "assets/images/home_screen_images/bottom_icons/icon5_off.svg"),
-                Container(
-                  margin: const EdgeInsets.only(left: 18, bottom: 15),
-                  padding: const EdgeInsets.all(1),
-                  decoration: BoxDecoration(
-                    color: AppColors.notification,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  constraints: const BoxConstraints(
-                    minWidth: 12,
-                    minHeight: 12,
-                  ),
-                  child: const Text(
-                    '4',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 8,
+            BottomNavigationBarItem(
+              icon: Stack(
+                children: [
+                  SvgPicture.asset(
+                      "assets/images/home_screen_images/bottom_icons/icon3_off.svg"),
+                  Container(
+                    margin: const EdgeInsets.only(left: 18, bottom: 15),
+                    padding: const EdgeInsets.all(1),
+                    decoration: BoxDecoration(
+                      color: AppColors.notification,
+                      borderRadius: BorderRadius.circular(4),
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              ],
-            ),
-            activeIcon: Stack(
-              children: [
-                SvgPicture.asset(
-                    "assets/images/home_screen_images/bottom_icons/icon5_on.svg"),
-                Container(
-                  margin: const EdgeInsets.only(left: 25),
-                  padding: const EdgeInsets.all(1),
-                  decoration: BoxDecoration(
-                    color: AppColors.notification,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  constraints: const BoxConstraints(
-                    minWidth: 12,
-                    minHeight: 12,
-                  ),
-                  child: const Text(
-                    '4',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 8,
+                    constraints: const BoxConstraints(
+                      minWidth: 12,
+                      minHeight: 12,
                     ),
-                    textAlign: TextAlign.center,
+                    child: const Text(
+                      '4',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                ],
+              ),
+              activeIcon: Stack(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(
+                      top: 5,
+                    ),
+                    child: SvgPicture.asset(
+                        "assets/images/home_screen_images/bottom_icons/icon3_on.svg"),
                   ),
-                )
-              ],
+                  Container(
+                    margin: const EdgeInsets.only(left: 18, bottom: 15),
+                    padding: const EdgeInsets.all(1),
+                    decoration: BoxDecoration(
+                      color: AppColors.notification,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    constraints: const BoxConstraints(
+                      minWidth: 12,
+                      minHeight: 12,
+                    ),
+                    child: const Text(
+                      '4',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                ],
+              ),
+              label: 'Home',
             ),
-            label: 'Home',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                  "assets/images/home_screen_images/bottom_icons/icon4_off.svg"),
+              activeIcon: SvgPicture.asset(
+                  "assets/images/home_screen_images/bottom_icons/icon4_on.svg"),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Stack(
+                children: [
+                  SvgPicture.asset(
+                      "assets/images/home_screen_images/bottom_icons/icon5_off.svg"),
+                  Container(
+                    margin: const EdgeInsets.only(left: 18, bottom: 15),
+                    padding: const EdgeInsets.all(1),
+                    decoration: BoxDecoration(
+                      color: AppColors.notification,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    constraints: const BoxConstraints(
+                      minWidth: 12,
+                      minHeight: 12,
+                    ),
+                    child: const Text(
+                      '4',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                ],
+              ),
+              activeIcon: Stack(
+                children: [
+                  SvgPicture.asset(
+                      "assets/images/home_screen_images/bottom_icons/icon5_on.svg"),
+                  Container(
+                    margin: const EdgeInsets.only(left: 25),
+                    padding: const EdgeInsets.all(1),
+                    decoration: BoxDecoration(
+                      color: AppColors.notification,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    constraints: const BoxConstraints(
+                      minWidth: 12,
+                      minHeight: 12,
+                    ),
+                    child: const Text(
+                      '4',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                ],
+              ),
+              label: 'Home',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.amber[800],
+          onTap: _onItemTapped,
+        ),
       ),
     );
   }

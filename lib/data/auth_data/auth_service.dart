@@ -90,10 +90,23 @@ class AuthServiceImpl implements AuthService {
   @override
   Future<UserCredential> signInWithEmailAndPassword(
       {LoginModel? loginModel}) async {
-    final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+    final credential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(
       email: loginModel?.email ?? "",
       password: loginModel?.password ?? "",
-    );
+    )
+        .then((value) async {
+      try {
+        await value.user!.sendEmailVerification();
+      } on FirebaseAuthException catch (e) {
+        log(e.code);
+      } catch (e) {
+        log(e.toString());
+      }
+
+      return value;
+    });
+    ;
 
     return credential;
   }

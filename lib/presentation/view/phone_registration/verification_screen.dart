@@ -61,131 +61,139 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
         }
       }
     }));
-    return Scaffold(
-      backgroundColor: AppColors.primaryBackgroundColor,
-      body: LayoutBuilder(
-        builder: (context, constrains) => SingleChildScrollView(
-          child: IntrinsicHeight(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 75,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: ImagePaths.topImage,
+    return WillPopScope(
+      onWillPop: () {
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/login', ModalRoute.withName('/welcome'));
+        return Future.value(false);
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.primaryBackgroundColor,
+        body: LayoutBuilder(
+          builder: (context, constrains) => SingleChildScrollView(
+            child: IntrinsicHeight(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 75,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: ImagePaths.topImage,
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 35,
-                        left: 20,
-                      ),
-                      child: SizedBox(
-                        height: 38,
-                        width: 38,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            padding: const MaterialStatePropertyAll(
-                                EdgeInsets.only(left: 5)),
-                            backgroundColor:
-                                const MaterialStatePropertyAll<Color>(
-                              AppColors.primaryBackgroundColor,
-                            ),
-                            shape: MaterialStatePropertyAll(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(13.0),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 35,
+                          left: 20,
+                        ),
+                        child: SizedBox(
+                          height: 38,
+                          width: 38,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              padding: const MaterialStatePropertyAll(
+                                  EdgeInsets.only(left: 5)),
+                              backgroundColor:
+                                  const MaterialStatePropertyAll<Color>(
+                                AppColors.primaryBackgroundColor,
+                              ),
+                              shape: MaterialStatePropertyAll(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(13.0),
+                                ),
                               ),
                             ),
-                          ),
-                          onPressed: () {},
-                          child: const Icon(
-                            Icons.arrow_back_ios,
-                            color: AppColors.textColor1,
-                            size: 16,
+                            onPressed: () {},
+                            child: const Icon(
+                              Icons.arrow_back_ios,
+                              color: AppColors.textColor1,
+                              size: 16,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 80,
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 25,
-                      top: 20,
-                    ),
-                    child: Text(
-                      AppLocalizations.of(context)!.verificationPhone,
-                      style: const TextStyle(
-                        fontFamily: 'Sofia Pro',
-                        fontSize: 36.41,
-                        fontWeight: FontWeight.bold,
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 80,
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 25,
+                        top: 20,
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context)!.verificationPhone,
+                        style: const TextStyle(
+                          fontFamily: 'Sofia Pro',
+                          fontSize: 36.41,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Expanded(
-                  flex: 7,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 25,
-                      right: 20,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.titleVerificationPhone,
-                          style: const TextStyle(
-                            fontFamily: 'Sofia Pro',
-                            fontSize: 14,
-                            color: AppColors.textColor,
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Expanded(
+                    flex: 7,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 25,
+                        right: 20,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!
+                                .titleVerificationPhone,
+                            style: const TextStyle(
+                              fontFamily: 'Sofia Pro',
+                              fontSize: 14,
+                              color: AppColors.textColor,
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Pinput(
-                          length: 6,
-                          defaultPinTheme: defaultPinTheme,
-                          focusedPinTheme: focusedPinTheme,
-                          // validator: (s) {
-                          //   return s == '123456' ? null : 'Pin is incorrect';
-                          // },
-                          pinputAutovalidateMode:
-                              PinputAutovalidateMode.onSubmit,
-                          onCompleted: (pin) {
-                            ref
-                                .read(authControllerProvider.notifier)
-                                .signUpWithPhone(context,
-                                    smsCode: pin,
-                                    verificationId: verificationId);
-                          },
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Pinput(
+                            length: 6,
+                            defaultPinTheme: defaultPinTheme,
+                            focusedPinTheme: focusedPinTheme,
+                            // validator: (s) {
+                            //   return s == '123456' ? null : 'Pin is incorrect';
+                            // },
+                            pinputAutovalidateMode:
+                                PinputAutovalidateMode.onSubmit,
+                            onCompleted: (pin) {
+                              ref
+                                  .read(authControllerProvider.notifier)
+                                  .signUpWithPhone(context,
+                                      smsCode: pin,
+                                      verificationId: verificationId);
+                            },
 
-                          showCursor: true,
-                          controller: pinController,
-                        ),
-                        const SizedBox(
-                          height: 50,
-                        ),
-                      ],
+                            showCursor: true,
+                            controller: pinController,
+                          ),
+                          const SizedBox(
+                            height: 50,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

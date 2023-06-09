@@ -9,6 +9,7 @@ import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widg
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
 import 'package:food_hub_app/presentation/view/home/food_hub_screen.dart';
+import 'package:food_hub_app/presentation/view/login/widgets/login_widget.dart';
 import 'package:food_hub_app/presentation/view/sign_up/widgets/sign_up_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -30,6 +31,8 @@ class _VerificationEmailScreenState
 
   @override
   void initState() {
+    LoginWidget.formLoginGroup.reset();
+
     super.initState();
 
     isEmailVerified = FirebaseAuth.instance.currentUser?.emailVerified ?? false;
@@ -37,10 +40,9 @@ class _VerificationEmailScreenState
     if (!isEmailVerified) {
       // sendVerificationEmail();
 
-      timer = Timer.periodic(
-        const Duration(seconds: 3),
-        (_) => checkEmailVerified(),
-      );
+      timer = Timer.periodic(const Duration(seconds: 3), (_) {
+        checkEmailVerified();
+      });
     }
   }
 
@@ -66,75 +68,85 @@ class _VerificationEmailScreenState
           FirebaseAuth.instance.currentUser?.emailVerified ?? false;
     });
 
-    if (isEmailVerified) timer?.cancel();
+    if (isEmailVerified) {
+      timer?.cancel();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return isEmailVerified
         ? const FoodHubScreen()
-        : Scaffold(
-            backgroundColor: AppColors.primaryBackgroundColor,
-            body: LayoutBuilder(
-              builder: (context, constrains) => SingleChildScrollView(
-                child: IntrinsicHeight(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Stack(
-                        children: [
-                          CustomWidget.topImage(context),
-                          CustomButtonWidget.backButton(
-                            context,
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
-                      CustomWidget.spaceH(100),
-                      CustomTextWidget.titleName(
-                        context,
-                        AppLocalizations.of(context)!.verificationEmail,
-                      ),
-                      CustomWidget.spaceH(15),
-                      Expanded(
-                        flex: 7,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            left: 30,
-                            right: 20,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!
-                                    .titleVerificationEmail(user?.email),
-                                style: const TextStyle(
-                                  fontFamily: 'Sofia Pro',
-                                  fontSize: 14,
-                                  color: AppColors.textColor,
+        : WillPopScope(
+            onWillPop: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/login', ModalRoute.withName('/welcome'));
+              ref.read(authControllerProvider.notifier).setState(false);
+              return Future.value(false);
+            },
+            child: Scaffold(
+              backgroundColor: AppColors.primaryBackgroundColor,
+              body: LayoutBuilder(
+                builder: (context, constrains) => SingleChildScrollView(
+                  child: IntrinsicHeight(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Stack(
+                          children: [
+                            CustomWidget.topImage(context),
+                            CustomButtonWidget.backButton(
+                              context,
+                              onPressed: () {},
+                            ),
+                          ],
+                        ),
+                        CustomWidget.spaceH(100),
+                        CustomTextWidget.titleName(
+                          context,
+                          AppLocalizations.of(context)!.verificationEmail,
+                        ),
+                        CustomWidget.spaceH(15),
+                        Expanded(
+                          flex: 7,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              left: 30,
+                              right: 20,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context)!
+                                      .titleVerificationEmail(user?.email),
+                                  style: const TextStyle(
+                                    fontFamily: 'Sofia Pro',
+                                    fontSize: 14,
+                                    color: AppColors.textColor,
+                                  ),
                                 ),
-                              ),
-                              CustomWidget.spaceH(38),
-                              SignUpWidget.resendButtonWidget(context,
-                                  onPress: () {}),
-                              CustomWidget.spaceH(38),
-                              SignUpWidget.cancelButton(context, onPress: () {
-                                FirebaseAuth.instance.signOut();
-                                ref
-                                    .read(authControllerProvider.notifier)
-                                    .logout();
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  '/sign_up',
-                                  ModalRoute.withName('/welcome'),
-                                );
-                              }),
-                            ],
+                                CustomWidget.spaceH(38),
+                                SignUpWidget.resendButtonWidget(context,
+                                    onPress: () {}),
+                                CustomWidget.spaceH(38),
+                                SignUpWidget.cancelButton(context, onPress: () {
+                                  FirebaseAuth.instance.signOut();
+                                  ref
+                                      .read(authControllerProvider.notifier)
+                                      .logout();
+                                  Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    '/login',
+                                    ModalRoute.withName('/welcome'),
+                                  );
+                                }),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

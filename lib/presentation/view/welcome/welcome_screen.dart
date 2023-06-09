@@ -42,6 +42,11 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
       onWillPop: () async {
         presscount++;
 
+        Future.delayed(
+          const Duration(seconds: 4),
+          () => presscount = 0,
+        );
+
         if (presscount == 2) {
           exit(0);
         } else {

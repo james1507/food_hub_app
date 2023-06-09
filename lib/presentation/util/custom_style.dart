@@ -138,6 +138,7 @@ class CustomStyle {
             borderRadius: BorderRadius.circular(13.0),
           ),
         ),
+        
       );
 
   // Gradian Style
