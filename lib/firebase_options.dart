@@ -44,40 +44,40 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCFMv1XltGyYS1kssn-3URoaM9xHZ3bvnA',
-    appId: '1:442255127404:web:d9695641e56706a1e8b949',
-    messagingSenderId: '442255127404',
-    projectId: 'food-hub-502c1',
-    authDomain: 'food-hub-502c1.firebaseapp.com',
-    storageBucket: 'food-hub-502c1.appspot.com',
-    measurementId: 'G-1CSES5MM4R',
+    apiKey: 'AIzaSyDco8n49uS4gT4eZHEGM4ILyirGZ62qaqI',
+    appId: '1:323701786497:web:b613382c261b1a28270a80',
+    messagingSenderId: '323701786497',
+    projectId: 'foodhubforeveryone',
+    authDomain: 'foodhubforeveryone.firebaseapp.com',
+    storageBucket: 'foodhubforeveryone.appspot.com',
+    measurementId: 'G-MX06YKXRX2',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyB1-E78WYnz9k2neNbvZi3qO-FDrH5byUk',
-    appId: '1:442255127404:android:867eb8b82a825346e8b949',
-    messagingSenderId: '442255127404',
-    projectId: 'food-hub-502c1',
-    storageBucket: 'food-hub-502c1.appspot.com',
+    apiKey: 'AIzaSyCgl7KFrhdu0XC0UYZPQmPQOU2N95wbUA0',
+    appId: '1:323701786497:android:251c9b9a93bcd1b6270a80',
+    messagingSenderId: '323701786497',
+    projectId: 'foodhubforeveryone',
+    storageBucket: 'foodhubforeveryone.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCD6Eeldwekon6QVefxytTI_j2EjLBOddA',
-    appId: '1:442255127404:ios:323b49f36e064b12e8b949',
-    messagingSenderId: '442255127404',
-    projectId: 'food-hub-502c1',
-    storageBucket: 'food-hub-502c1.appspot.com',
-    iosClientId: '442255127404-6v2kjeg1c0d4mq9avqdp4je4ago8pm2a.apps.googleusercontent.com',
+    apiKey: 'AIzaSyBarZYful-W1Fq-1cElqg0nXo8DjG6pjl4',
+    appId: '1:323701786497:ios:fa3aac84c6629d81270a80',
+    messagingSenderId: '323701786497',
+    projectId: 'foodhubforeveryone',
+    storageBucket: 'foodhubforeveryone.appspot.com',
+    iosClientId: '323701786497-8lq0ga99v226m574isj80m8io35h3vpa.apps.googleusercontent.com',
     iosBundleId: 'com.james.foodHubApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCD6Eeldwekon6QVefxytTI_j2EjLBOddA',
-    appId: '1:442255127404:ios:6228e7c4a7003f3ee8b949',
-    messagingSenderId: '442255127404',
-    projectId: 'food-hub-502c1',
-    storageBucket: 'food-hub-502c1.appspot.com',
-    iosClientId: '442255127404-mpcmkvtc9q7lmpad050sambg6u16top4.apps.googleusercontent.com',
+    apiKey: 'AIzaSyBarZYful-W1Fq-1cElqg0nXo8DjG6pjl4',
+    appId: '1:323701786497:ios:6bd08d042049f3ce270a80',
+    messagingSenderId: '323701786497',
+    projectId: 'foodhubforeveryone',
+    storageBucket: 'foodhubforeveryone.appspot.com',
+    iosClientId: '323701786497-629cq5t4har49fgva0k0tcjh1758lsh4.apps.googleusercontent.com',
     iosBundleId: 'com.james.foodHubApp.RunnerTests',
   );
 }

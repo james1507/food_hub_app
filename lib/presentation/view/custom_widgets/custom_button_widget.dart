@@ -1,10 +1,12 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
 import 'package:food_hub_app/presentation/util/custom_style.dart';
 
 class CustomButtonWidget {
-  static Widget authSocialLoginButton(
+  static Widget authSocialLoginButton(BuildContext context,
       {required VoidCallback onPress,
       String text = "",
       required SvgPicture socialPic}) {
@@ -12,7 +14,7 @@ class CustomButtonWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
-          style: CustomStyle.buttonAuthSocial,
+          style: CustomStyle.buttonAuthSocial(context),
           onPressed: onPress,
           child: Row(
             children: [
@@ -22,7 +24,7 @@ class CustomButtonWidget {
               ),
               Text(
                 text,
-                style: CustomStyle.boldPrimary14,
+                style: CustomStyle.boldPrimary14(context),
               ),
             ],
           ),
@@ -31,7 +33,7 @@ class CustomButtonWidget {
     );
   }
 
-  static Widget alreadyAccountOrDont(
+  static Widget alreadyAccountOrDont(BuildContext context,
       {String status = "",
       String statusTextForButton = "",
       required VoidCallback onPressed,
@@ -43,15 +45,15 @@ class CustomButtonWidget {
       children: [
         Text(
           status,
-          style: CustomStyle.customAlready(color: color),
+          style: CustomStyle.customAlready(context, color: color),
         ),
         TextButton(
           onPressed: onPressed,
           child: Text(
             statusTextForButton,
             style: underline
-                ? CustomStyle.underlinePrimary16
-                : CustomStyle.customAlready(color: colorButton),
+                ? CustomStyle.underlinePrimary16(context)
+                : CustomStyle.customAlready(context, color: colorButton),
           ),
         ),
       ],
@@ -80,7 +82,8 @@ class CustomButtonWidget {
     );
   }
 
-  static Widget backButton({required VoidCallback onPressed}) {
+  static Widget backButton(BuildContext context,
+      {required VoidCallback onPressed}) {
     return Container(
       height: 38,
       width: 38,
@@ -89,7 +92,7 @@ class CustomButtonWidget {
         top: 35,
       ),
       child: ElevatedButton(
-        style: CustomStyle.backButton,
+        style: CustomStyle.backButton(context),
         onPressed: onPressed,
         child: const Icon(
           Icons.arrow_back_ios,

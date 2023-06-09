@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_hub_app/presentation/util/util.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomWidget {
   static Widget lineSignIn(Color color) {
@@ -44,11 +45,11 @@ class CustomWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text("Error"),
+          title: Text(AppLocalizations.of(context)!.error),
           content: Text(errorString),
           actions: [
             TextButton(
-              child: const Text('Close'),
+              child: Text(AppLocalizations.of(context)!.close),
               onPressed: () {
                 Navigator.of(context).pop();
               },

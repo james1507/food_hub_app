@@ -9,6 +9,7 @@ import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widg
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
 import 'package:food_hub_app/presentation/view/login/widgets/login_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -28,6 +29,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -57,14 +63,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               children: [
                 CustomWidget.topImage(context),
                 CustomButtonWidget.backButton(
+                  context,
                   onPressed: () {},
                 ),
               ],
             ),
             CustomWidget.spaceH(100),
-            CustomTextWidget.titleName("Login"),
+            CustomTextWidget.titleName(
+                context, AppLocalizations.of(context)!.signIn),
             CustomWidget.spaceH(31),
             LoginWidget.reactiveFormLogin(
+              context,
               key: formKey,
               onPressed: () {
                 setState(
@@ -78,11 +87,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               passwordController: passwordController,
             ),
             LoginWidget.loginButtonWidget(
+              context,
               onPress: () {
                 if (LoginWidget.formLoginGroup.valid == true) {
                   ref
                       .watch(authControllerProvider.notifier)
                       .loginWithEmailAndPassWord(loginModel, context);
+                  
                 } else {
                   CustomWidget.errorDialog(context,
                       errorString: "Please enter done input");
@@ -92,7 +103,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             CustomWidget.spaceH(20),
             LoginWidget.alreadyAccountQuestion(context),
             CustomWidget.spaceH(20),
-            CustomTextWidget.signInWith(
+            CustomTextWidget.signInWith(context,
                 colorText: AppColors.titleTextFieldColor,
                 colorLine: AppColors.titleTextFieldColor),
             CustomWidget.spaceH(20),
@@ -100,6 +111,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomButtonWidget.authSocialLoginButton(
+                  context,
                   onPress: () {
                     ref
                         .read(authControllerProvider.notifier)
@@ -110,6 +122,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
                 CustomWidget.spaceW(20),
                 CustomButtonWidget.authSocialLoginButton(
+                  context,
                   onPress: () {
                     ref
                         .read(authControllerProvider.notifier)

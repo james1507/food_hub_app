@@ -6,6 +6,7 @@ import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_field_
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginWidget {
   static final formLoginGroup = FormGroup({
@@ -19,9 +20,8 @@ class LoginWidget {
     ]),
   });
 
-  
-
-  static Widget reactiveFormLogin({
+  static Widget reactiveFormLogin(
+    BuildContext context, {
     Key? key,
     bool isVisible = false,
     required VoidCallback onPressed,
@@ -39,20 +39,24 @@ class LoginWidget {
         child: Column(
           children: [
             CustomTextFieldWidget.customReactiveTextField(
-              titleTextField: "E-mail",
+              context,
+              titleTextField: AppLocalizations.of(context)!.email,
               formControlName: 'email',
               controller: emailController,
-              validationMessages: StringConfigs.validationMessagesEmail,
+              validationMessages:
+                  StringConfigs.validationMessagesEmail(context),
               keyboardType: TextInputType.emailAddress,
             ),
             CustomWidget.spaceH(29),
             CustomTextFieldWidget.customReactivePassTextField(
-              titleTextField: "Password",
+              context,
+              titleTextField: AppLocalizations.of(context)!.password,
               formControlName: 'password',
               controller: passwordController,
               onPressed: onPressed,
               isVisible: isVisible,
-              validationMessages: StringConfigs.validationMessagesPassword,
+              validationMessages:
+                  StringConfigs.validationMessagesPassword(context),
             ),
           ],
         ),
@@ -60,7 +64,8 @@ class LoginWidget {
     );
   }
 
-  static Widget loginButtonWidget({required VoidCallback onPress}) {
+  static Widget loginButtonWidget(BuildContext context,
+      {required VoidCallback onPress}) {
     return Center(
       child: CustomButtonWidget.customButton(
         marginButton: const EdgeInsets.only(right: 27.5, top: 26),
@@ -70,15 +75,17 @@ class LoginWidget {
         boderRadius: 30,
         onPress: onPress,
         widget: CustomTextWidget.textCustom(
-            text: 'LOGIN', color: AppColors.primaryBackgroundColor),
+            text: AppLocalizations.of(context)!.signInUpper,
+            color: AppColors.primaryBackgroundColor),
       ),
     );
   }
 
   static Widget alreadyAccountQuestion(BuildContext context) {
     return CustomButtonWidget.alreadyAccountOrDont(
-      status: 'Don’t have an account?',
-      statusTextForButton: 'Sign Up',
+      context,
+      status: AppLocalizations.of(context)!.dontHaveAccount,
+      statusTextForButton: AppLocalizations.of(context)!.signUp,
       onPressed: () {
         Navigator.pushNamed(context, '/sign_up');
       },

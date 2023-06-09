@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   flutter_svg: ^1.0.1
-  firebase_auth: ^4.2.5
+  firebase_auth: ^4.6.2
   firebase_core: ^2.13.1
   cloud_firestore: ^4.8.0
   flutter_facebook_auth: ^5.0.11
@@ -29,6 +29,10 @@ dependencies:
   double_back_to_close_app: ^2.1.0
   fluttertoast: ^8.2.2
   flutter_easyloading: ^3.0.5
+  flutter_localization: ^0.1.11
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:
@@ -38,6 +42,7 @@ dev_dependencies:
   json_serializable: ^6.7.0
 
 flutter:
+  generate: true
   uses-material-design: true
 
   assets:
@@ -55,5 +60,5 @@ flutter:
   fonts:
     - family: Sofia Pro
       fonts:
-        - asset: assets/fonts/sofia_pro/SofiaPro-Regular.ttf
+        - asset: assets/fonts/sofia_pro/Sofia-Pro-Regular-VN.ttf
           weight: 400

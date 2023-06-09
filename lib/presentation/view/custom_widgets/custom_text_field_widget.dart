@@ -3,7 +3,8 @@ import 'package:food_hub_app/presentation/util/custom_style.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class CustomTextFieldWidget {
-  static Widget customReactiveTextField({
+  static Widget customReactiveTextField(
+    BuildContext context, {
     String titleTextField = "",
     String formControlName = "",
     TextEditingController? controller,
@@ -18,12 +19,12 @@ class CustomTextFieldWidget {
           padding: const EdgeInsets.only(bottom: 15),
           child: Text(
             titleTextField,
-            style: CustomStyle.titleTextField,
+            style: CustomStyle.titleTextField(context),
           ),
         ),
         ReactiveTextField(
           formControlName: formControlName,
-          decoration: CustomStyle.textFieldStyle,
+          decoration: CustomStyle.textFieldStyle(context),
           controller: controller,
           onChanged: (value) => onChanged,
           validationMessages: validationMessages,
@@ -33,7 +34,8 @@ class CustomTextFieldWidget {
     );
   }
 
-  static Widget customPhoneReactiveTextField({
+  static Widget customPhoneReactiveTextField(
+    BuildContext context, {
     String titleTextField = "",
     String formControlName = "",
     TextEditingController? controller,
@@ -43,7 +45,7 @@ class CustomTextFieldWidget {
   }) {
     return ReactiveTextField(
       formControlName: formControlName,
-      decoration: CustomStyle.textFieldPhoneStyle,
+      decoration: CustomStyle.textFieldPhoneStyle(context),
       controller: controller,
       onChanged: (value) => onChanged,
       validationMessages: validationMessages,
@@ -51,7 +53,8 @@ class CustomTextFieldWidget {
     );
   }
 
-  static Widget customReactivePassTextField({
+  static Widget customReactivePassTextField(
+    BuildContext context, {
     bool isVisible = false,
     String titleTextField = "",
     required VoidCallback onPressed,
@@ -67,7 +70,7 @@ class CustomTextFieldWidget {
           padding: const EdgeInsets.only(bottom: 15),
           child: Text(
             titleTextField,
-            style: CustomStyle.titleTextField,
+            style: CustomStyle.titleTextField(context),
           ),
         ),
         ReactiveTextField(

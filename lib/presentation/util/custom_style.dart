@@ -1,114 +1,117 @@
 import 'package:flutter/material.dart';
+
 import 'package:food_hub_app/presentation/util/util.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomStyle {
-  // Text Style
+  static TextStyle boldDark52(BuildContext context) => TextStyle(
+        fontFamily: AppLocalizations.of(context)!.fontApp,
+        fontSize: 52,
+        color: AppColors.primaryTitleColor,
+        fontWeight: FontWeight.bold,
+      );
 
-  static const TextStyle boldDark52 = TextStyle(
-    fontFamily: 'Sofia Pro',
-    fontSize: 52,
-    color: AppColors.primaryTitleColor,
-    fontWeight: FontWeight.bold,
-  );
+  static TextStyle boldPrimary52(BuildContext context) => TextStyle(
+        fontFamily: AppLocalizations.of(context)!.fontApp,
+        fontSize: 52,
+        color: AppColors.primaryColor,
+        fontWeight: FontWeight.bold,
+      );
 
-  static const TextStyle boldPrimary52 = TextStyle(
-    fontFamily: 'Sofia Pro',
-    fontSize: 52,
-    color: AppColors.primaryColor,
-    fontWeight: FontWeight.bold,
-  );
+  static TextStyle boldPrimary18h2(BuildContext context) => TextStyle(
+        height: 2,
+        fontFamily: AppLocalizations.of(context)!.fontApp,
+        fontSize: 18,
+        color: AppColors.welcomeSubtitleColor,
+      );
+  static TextStyle boldPrimary18(BuildContext context) => TextStyle(
+        fontFamily: AppLocalizations.of(context)!.fontApp,
+        fontSize: 18,
+        color: AppColors.welcomeSubtitleColor,
+      );
 
-  static const TextStyle boldPrimary18h2 = TextStyle(
-    height: 2,
-    fontFamily: 'Sofia Pro',
-    fontSize: 18,
-    color: AppColors.welcomeSubtitleColor,
-  );
-  static const TextStyle boldPrimary18 = TextStyle(
-    fontFamily: 'Sofia Pro',
-    fontSize: 18,
-    color: AppColors.welcomeSubtitleColor,
-  );
+  static TextStyle boldPrimary14(BuildContext context) => TextStyle(
+        fontFamily: AppLocalizations.of(context)!.fontApp,
+        color: AppColors.primaryTitleColor,
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+      );
 
-  static const TextStyle boldPrimary14 = TextStyle(
-    fontFamily: 'Sofia Pro',
-    color: AppColors.primaryTitleColor,
-    fontSize: 14,
-    fontWeight: FontWeight.bold,
-  );
-
-  static TextStyle customSignWith({Color color = AppColors.primaryTextColor}) {
+  static TextStyle customSignWith(BuildContext context,
+      {Color color = AppColors.primaryTextColor}) {
     return TextStyle(
       fontSize: 16,
-      fontFamily: 'Sofia Pro',
+      fontFamily: AppLocalizations.of(context)!.fontApp,
       color: color,
     );
   }
 
-  static TextStyle customAlready({Color color = AppColors.primaryTextColor}) {
+  static TextStyle customAlready(BuildContext context,
+      {Color color = AppColors.primaryTextColor}) {
     return TextStyle(
       fontSize: 16,
-      fontFamily: 'Sofia Pro',
+      fontFamily: AppLocalizations.of(context)!.fontApp,
       color: color,
     );
   }
 
-  static const TextStyle underlinePrimary16 = TextStyle(
-    fontFamily: 'Sofia Pro',
-    color: AppColors.primaryBackgroundColor,
-    fontSize: 16,
-    decoration: TextDecoration.underline,
-    decorationColor: AppColors.primaryBackgroundColor,
-    decorationThickness: 2,
-  );
+  static TextStyle underlinePrimary16(BuildContext context) => TextStyle(
+        fontFamily: AppLocalizations.of(context)!.fontApp,
+        color: AppColors.primaryBackgroundColor,
+        fontSize: 16,
+        decoration: TextDecoration.underline,
+        decorationColor: AppColors.primaryBackgroundColor,
+        decorationThickness: 2,
+      );
 
-  static const TextStyle buttonEorP16 =
-      TextStyle(fontFamily: 'Sofia Pro', fontSize: 16);
+  static TextStyle buttonEorP16(BuildContext context) => TextStyle(
+      fontFamily: AppLocalizations.of(context)!.fontApp, fontSize: 16);
 
-  static const TextStyle titlePrimary32 = TextStyle(
-    fontSize: 32,
-    fontFamily: 'Sofia Pro',
-    color: AppColors.primaryTitleColor,
-    fontWeight: FontWeight.w600,
-    fontStyle: FontStyle.normal,
-  );
+  static TextStyle titlePrimary32(BuildContext context) => TextStyle(
+        fontSize: 32,
+        fontFamily: AppLocalizations.of(context)!.fontApp,
+        color: AppColors.primaryTitleColor,
+        fontWeight: FontWeight.w600,
+        fontStyle: FontStyle.normal,
+      );
 
-  static TextStyle titleTextField = const TextStyle(
-    fontFamily: 'Sofia Pro',
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.w400,
-    fontSize: 16,
-    color: AppColors.titleTextFieldColor,
-  );
+  static TextStyle titleTextField(BuildContext context) => TextStyle(
+        fontFamily: AppLocalizations.of(context)!.fontApp,
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w400,
+        fontSize: 16,
+        color: AppColors.titleTextFieldColor,
+      );
 
   // Button Style
 
-  static ButtonStyle buttonAuthSocial = ButtonStyle(
-    padding: const MaterialStatePropertyAll(EdgeInsets.only(left: 15)),
-    backgroundColor: const MaterialStatePropertyAll<Color>(
-      AppColors.primaryBackgroundColor,
-    ),
-    shape: MaterialStatePropertyAll(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
-      ),
-    ),
-    fixedSize: const MaterialStatePropertyAll<Size>(Size(140, 54)),
-  );
+  static ButtonStyle buttonAuthSocial(BuildContext context) => ButtonStyle(
+        padding: const MaterialStatePropertyAll(EdgeInsets.only(left: 15)),
+        backgroundColor: const MaterialStatePropertyAll<Color>(
+          AppColors.primaryBackgroundColor,
+        ),
+        shape: MaterialStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        ),
+        fixedSize: const MaterialStatePropertyAll<Size>(Size(140, 54)),
+      );
 
-  static ButtonStyle buttonStartEmailorPhone = ButtonStyle(
-    foregroundColor: const MaterialStatePropertyAll<Color>(Colors.white),
-    backgroundColor:
-        MaterialStatePropertyAll<Color>(Colors.white.withOpacity(0.21)),
-    shape: MaterialStatePropertyAll(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
-      ),
-    ),
-    minimumSize: const MaterialStatePropertyAll<Size>(Size(300, 54)),
-    side: const MaterialStatePropertyAll<BorderSide>(
-        BorderSide(color: Colors.white, width: 1)),
-  );
+  static ButtonStyle buttonStartEmailorPhone(BuildContext context) =>
+      ButtonStyle(
+        foregroundColor: const MaterialStatePropertyAll<Color>(Colors.white),
+        backgroundColor:
+            MaterialStatePropertyAll<Color>(Colors.white.withOpacity(0.21)),
+        shape: MaterialStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        ),
+        minimumSize: const MaterialStatePropertyAll<Size>(Size(300, 54)),
+        side: const MaterialStatePropertyAll<BorderSide>(
+            BorderSide(color: Colors.white, width: 1)),
+      );
 
   static ButtonStyle skipButton(Color backgroundColor, double boderRadius) {
     return ButtonStyle(
@@ -125,17 +128,17 @@ class CustomStyle {
     );
   }
 
-  static ButtonStyle backButton = ButtonStyle(
-    padding: const MaterialStatePropertyAll(EdgeInsets.only(left: 5)),
-    backgroundColor: const MaterialStatePropertyAll<Color>(
-      AppColors.primaryBackgroundColor,
-    ),
-    shape: MaterialStatePropertyAll(
-      RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(13.0),
-      ),
-    ),
-  );
+  static ButtonStyle backButton(BuildContext context) => ButtonStyle(
+        padding: const MaterialStatePropertyAll(EdgeInsets.only(left: 5)),
+        backgroundColor: const MaterialStatePropertyAll<Color>(
+          AppColors.primaryBackgroundColor,
+        ),
+        shape: MaterialStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(13.0),
+          ),
+        ),
+      );
 
   // Gradian Style
 
@@ -151,58 +154,60 @@ class CustomStyle {
 
   // Text Form Field Style
 
-  static InputDecoration textFieldStyle = const InputDecoration(
-    border: OutlineInputBorder(),
-    focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(
-        width: 1,
-        color: AppColors.primaryColor,
-      ),
-      borderRadius: BorderRadius.all(
-        Radius.circular(10),
-      ),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(
-        width: 1,
-        color: AppColors.borderOffTextFieldColor,
-      ),
-      borderRadius: BorderRadius.all(
-        Radius.circular(10),
-      ),
-    ),
-  );
+  static InputDecoration textFieldStyle(BuildContext context) =>
+      const InputDecoration(
+        border: OutlineInputBorder(),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 1,
+            color: AppColors.primaryColor,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 1,
+            color: AppColors.borderOffTextFieldColor,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+      );
 
-  static InputDecoration textFieldPhoneStyle = const InputDecoration(
-    border: OutlineInputBorder(),
-    focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(
-        width: 1,
-        color: AppColors.borderOffTextFieldColor,
-      ),
-      borderRadius: BorderRadius.all(
-        Radius.circular(10),
-      ),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(
-        width: 1,
-        color: AppColors.borderOffTextFieldColor,
-      ),
-      borderRadius: BorderRadius.all(
-        Radius.circular(10),
-      ),
-    ),
-    errorBorder: OutlineInputBorder(
-      borderSide: BorderSide(
-        width: 1,
-        color: AppColors.borderOffTextFieldColor,
-      ),
-      borderRadius: BorderRadius.all(
-        Radius.circular(10),
-      ),
-    ),
-  );
+  static InputDecoration textFieldPhoneStyle(BuildContext context) =>
+      const InputDecoration(
+        border: OutlineInputBorder(),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 1,
+            color: AppColors.borderOffTextFieldColor,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 1,
+            color: AppColors.borderOffTextFieldColor,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 1,
+            color: AppColors.borderOffTextFieldColor,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+      );
 
   static InputDecoration checkVisiblePass(
       {bool isVisible = false, required VoidCallback onPressed}) {

@@ -1,0 +1,51 @@
+{
+    "language" : "Việt Nam",
+    "welcomeTo": "Chào mừng tới\n",
+    "foobHub": "FoobHub\n",
+    "skip": "Bỏ qua",
+    "titleWelcome1": "Thực phẩm yêu thích của bạn được giao\n",
+    "titleWelcome2": "nhanh chóng ở cửa của bạn.",
+    "startWithEmailOrPhoneButton": "Bắt đầu với email hoặc điện thoại",
+    "messageExit": "Nhấn lần nữa để thoát khỏi ứng dụng",
+    "signInWith": "đăng nhập với",
+    "alreadyAccount": "Bạn đã có tài khoản?",
+    "dontHaveAccount": "Bạn chưa có tài khoản ?",
+    "signIn": "Đăng nhập",
+    "signUp": "Đăng ký",
+    "fullName": "Tên đầy đủ",
+    "email": "E-mail",
+    "password": "Mật khẩu",
+    "signUpUpper": "ĐĂNG KÝ",
+    "signUpWithPhone": "Đăng ký với số điện thoại?",
+    "clickHere": "Ấn vào đây",
+    "resendEmail": "GỬI LẠI EMAIL",
+    "cancelUpper": "HUỶ",
+    "dialogEnterInput": "Vui lòng nhập",
+    "error": "Lỗi",
+    "close": "Đóng",
+    "verificationEmail": "Xác thực Email",
+    "titleVerificationEmail": "Xác thực đã được gửi về email của bạn {user}",
+    "@titleVerificationEmail": {
+        "placeholders": {
+            "user": {
+                "type": "String"
+            }
+        }
+    },
+    "sendUpper": "GỬI",
+    "registrationPhone": "Đăng ký với Số điện thoại",
+    "titleRegistrationPhone": "Hãy nhập số điện thoại để xác thực \ntài khoản của bạn",
+    "invalidValue": "hãy nhập đúng số điện thoại",
+    "verificationPhone": "Xác thực Điện thoại",
+    "titleVerificationPhone": "Hãy nhập số điện thoại để xác thực \ntài khoản của bạn",
+    "signInUpper": "ĐĂNG NHẬP",
+    "validationMessagesName": "Bạn không được để trống tên",
+    "validationMessagesEmailRequired": "Bạn không được để trống email",
+    "validationMessagesEmailInvalid": "Bạn không đúng kiểu email",
+    "validationMessagesPassword": "Mật khẩu của bạn không được để trống",
+    "validationMessagesPasswordLength": "Mật khẩu của bạn phải có ít nhất 8 ký tự",
+    "validationMessagesPhone": "Số điện thoại của bạn không được bỏ trống",
+    "validationMessagesPhoneInvalid": "Số điện thoại của bạn không đúng kiểu",
+    "fontApp": "Time new"
+
+}

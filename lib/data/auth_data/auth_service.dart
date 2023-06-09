@@ -57,7 +57,6 @@ class AuthServiceImpl implements AuthService {
         await FirebaseAuth.instance.signInWithCredential(credential);
       },
       verificationFailed: (FirebaseAuthException e) {
-        print("aaa ${e.code}");
         if (e.code == "app-not-authorized") {
           Navigator.of(context).pop();
           CustomWidget.errorDialog(context, errorString: "app not authorized");
@@ -101,10 +100,11 @@ class AuthServiceImpl implements AuthService {
 
   @override
   Future<UserCredential> signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    GoogleSignIn googleSignIn = GoogleSignIn();
 
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+    final googleUser = await googleSignIn.signIn();
+
+    final googleAuth = await googleUser?.authentication;
 
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
@@ -115,7 +115,7 @@ class AuthServiceImpl implements AuthService {
         .signInWithCredential(credential)
         .then((value) async {
       try {
-        await value.user?.sendEmailVerification();
+        await value.user!.sendEmailVerification();
       } on FirebaseAuthException catch (e) {
         log(e.code);
       } catch (e) {
@@ -133,7 +133,19 @@ class AuthServiceImpl implements AuthService {
     final OAuthCredential credential =
         FacebookAuthProvider.credential(result.accessToken!.token);
 
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    return await FirebaseAuth.instance
+        .signInWithCredential(credential)
+        .then((value) async {
+      try {
+        await value.user!.sendEmailVerification();
+      } on FirebaseAuthException catch (e) {
+        log(e.code);
+      } catch (e) {
+        log(e.toString());
+      }
+
+      return value;
+    });
   }
 
   @override

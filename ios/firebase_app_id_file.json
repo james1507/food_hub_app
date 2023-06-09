@@ -1,7 +1,7 @@
 {
   "file_generated_by": "FlutterFire CLI",
   "purpose": "FirebaseAppID & ProjectID for this Firebase app in this directory",
-  "GOOGLE_APP_ID": "1:442255127404:ios:323b49f36e064b12e8b949",
-  "FIREBASE_PROJECT_ID": "food-hub-502c1",
-  "GCM_SENDER_ID": "442255127404"
+  "GOOGLE_APP_ID": "1:323701786497:ios:fa3aac84c6629d81270a80",
+  "FIREBASE_PROJECT_ID": "foodhubforeveryone",
+  "GCM_SENDER_ID": "323701786497"
 }

@@ -1,0 +1,51 @@
+{
+    "language": "English",
+    "skip": "Skip",
+    "welcomeTo": "Welcome to\n",
+    "foobHub": "FoobHub\n",
+    "titleWelcome1": "Your favourite foods delivered\n",
+    "titleWelcome2": "fast at your door.",
+    "startWithEmailOrPhoneButton": "Start with email or phone",
+    "messageExit": "press another time to exit from app",
+    "signInWith": "sign in with",
+    "alreadyAccount": "Already have an account ?",
+    "dontHaveAccount": "Don’t have an account ?",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "fullName": "Full name",
+    "email": "E-mail",
+    "password": "Password",
+    "signUpUpper": "SIGN UP",
+    "signUpWithPhone": "Sign up with phone number?",
+    "clickHere": "Click here",
+    "resendEmail": "RESEND EMAIL",
+    "cancelUpper": "CANCEL",
+    "dialogEnterInput": "Please enter done input",
+    "error": "Error",
+    "close": "Close",
+    "verificationEmail": "Verification Email",
+    "titleVerificationEmail": "A verification email has been sent to your email {user}",
+    "@titleVerificationEmail": {
+        "placeholders": {
+            "user": {
+                "type": "String?"
+            }
+        }
+    },
+    "sendUpper": "SEND",
+    "registrationPhone": "Registration",
+    "titleRegistrationPhone": "Enter your phone number to verify \n your account",
+    "invalidValue": "invalid value",
+    "verificationPhone": "Verification Phone",
+    "titleVerificationPhone": "Enter your phone number to verify \nyour account",
+    "signInUpper": "LOGIN",
+    "validationMessagesName": "The name must not be empty",
+    "validationMessagesEmailRequired": "The email must not be empty",
+    "validationMessagesEmailInvalid": "The email value must be a valid email",
+    "validationMessagesPassword": "The password must not be empty",
+    "validationMessagesPasswordLength": "The password must be at least 8 characters",
+    "validationMessagesPhone": "The phone must not be empty",
+    "validationMessagesPhoneInvalid": "The phone value must be a valid phone",
+    "fontApp": "Sofia Pro"
+    
+}

@@ -6,6 +6,7 @@ import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widg
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_field_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PhoneResWidget {
   static List<String> listCountryCode = <String>['VN', 'KR', 'JP', 'US'];
@@ -18,7 +19,8 @@ class PhoneResWidget {
     ]),
   });
 
-  static Widget reactiveFormPhoneLogin({
+  static Widget reactiveFormPhoneLogin(
+    BuildContext context, {
     Key? key,
     TextEditingController? phoneController,
   }) {
@@ -26,15 +28,17 @@ class PhoneResWidget {
       key: key,
       formGroup: formPhoneLoginGroup,
       child: CustomTextFieldWidget.customPhoneReactiveTextField(
+        context,
         formControlName: 'phoneNumber',
         controller: phoneController,
-        validationMessages: StringConfigs.validationMessagesPhone,
+        validationMessages: StringConfigs.validationMessagesPhone(context),
         keyboardType: TextInputType.phone,
       ),
     );
   }
 
-  static Widget loginButtonWidget({required VoidCallback onPress}) {
+  static Widget loginButtonWidget(BuildContext context,
+      {required VoidCallback onPress}) {
     return Center(
       child: CustomButtonWidget.customButton(
         height: 60,
@@ -43,7 +47,8 @@ class PhoneResWidget {
         boderRadius: 30,
         onPress: onPress,
         widget: CustomTextWidget.textCustom(
-            text: 'SEND', color: AppColors.primaryBackgroundColor),
+            text: AppLocalizations.of(context)!.sendUpper,
+            color: AppColors.primaryBackgroundColor),
       ),
     );
   }

@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_hub_app/presentation/util/util.dart';
 import 'package:food_hub_app/presentation/view/home/datas/food_item.dart';
 import 'package:food_hub_app/presentation/view/home/widgets/drawer_menu_widget.dart';
+import 'package:food_hub_app/presentation/view/login/widgets/login_widget.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   final VoidCallback openDrawer;
@@ -27,6 +28,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   bool isClick = true;
+
+  @override
+  void initState() {
+    LoginWidget.formLoginGroup.reset();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -3,9 +3,10 @@ import 'package:food_hub_app/presentation/util/custom_style.dart';
 import 'package:food_hub_app/presentation/util/util.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WelcomeWidget {
-  static Widget skipButtonWidget() {
+  static Widget skipButtonWidget(BuildContext context) {
     return CustomButtonWidget.customButton(
       marginButton: const EdgeInsets.only(right: 27.5, top: 26),
       height: 31,
@@ -13,30 +14,31 @@ class WelcomeWidget {
       backgroundColor: AppColors.primaryBackgroundColor,
       boderRadius: 20,
       onPress: () {},
-      widget: CustomTextWidget.textCustom(text: 'Skip'),
+      widget:
+          CustomTextWidget.textCustom(text: AppLocalizations.of(context)!.skip),
     );
   }
 
-  static Widget titleWelcome() {
+  static Widget titleWelcome(BuildContext context) {
     return Center(
       child: RichText(
-        text: const TextSpan(
+        text: TextSpan(
           children: [
             TextSpan(
-              text: 'Welcome to \n',
-              style: CustomStyle.boldDark52,
+              text: AppLocalizations.of(context)?.welcomeTo,
+              style: CustomStyle.boldDark52(context),
             ),
             TextSpan(
-              text: 'FoodHub \n',
-              style: CustomStyle.boldPrimary52,
+              text: AppLocalizations.of(context)?.foobHub,
+              style: CustomStyle.boldPrimary52(context),
             ),
             TextSpan(
-              text: 'Your favourite foods delivered\n',
-              style: CustomStyle.boldPrimary18h2,
+              text: AppLocalizations.of(context)?.titleWelcome1,
+              style: CustomStyle.boldPrimary18h2(context),
             ),
             TextSpan(
-              text: 'fast at your door.',
-              style: CustomStyle.boldPrimary18,
+              text: AppLocalizations.of(context)?.titleWelcome2,
+              style: CustomStyle.boldPrimary18(context),
             ),
           ],
         ),
@@ -44,13 +46,14 @@ class WelcomeWidget {
     );
   }
 
-  static Widget startWithEmailOrPhoneButton({required VoidCallback onPressed}) {
+  static Widget startWithEmailOrPhoneButton(BuildContext context,
+      {required VoidCallback onPressed}) {
     return OutlinedButton(
-      style: CustomStyle.buttonStartEmailorPhone,
+      style: CustomStyle.buttonStartEmailorPhone(context),
       onPressed: onPressed,
-      child: const Text(
-        "Start with email or phone",
-        style: CustomStyle.buttonEorP16,
+      child: Text(
+        AppLocalizations.of(context)!.startWithEmailOrPhoneButton,
+        style: CustomStyle.buttonEorP16(context),
       ),
     );
   }

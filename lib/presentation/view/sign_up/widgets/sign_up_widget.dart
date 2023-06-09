@@ -6,6 +6,7 @@ import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_field_
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignUpWidget {
   static final formLoginGroup = FormGroup({
@@ -20,7 +21,8 @@ class SignUpWidget {
     ]),
   });
 
-  static Widget reactiveFormSignUp({
+  static Widget reactiveFormSignUp(
+    BuildContext context, {
     Key? key,
     bool isVisible = false,
     required VoidCallback onPressed,
@@ -39,26 +41,31 @@ class SignUpWidget {
         child: Column(
           children: [
             CustomTextFieldWidget.customReactiveTextField(
-              titleTextField: "Full name",
+              context,
+              titleTextField: AppLocalizations.of(context)!.signIn,
               formControlName: 'name',
               controller: fullNameController,
-              validationMessages: StringConfigs.validationMessagesName,
+              validationMessages: StringConfigs.validationMessagesName(context),
             ),
             CustomTextFieldWidget.customReactiveTextField(
-              titleTextField: "E-mail",
+              context,
+              titleTextField: AppLocalizations.of(context)!.email,
               formControlName: 'email',
               controller: emailController,
-              validationMessages: StringConfigs.validationMessagesEmail,
+              validationMessages:
+                  StringConfigs.validationMessagesEmail(context),
               keyboardType: TextInputType.emailAddress,
             ),
             CustomWidget.spaceH(29),
             CustomTextFieldWidget.customReactivePassTextField(
-              titleTextField: "Password",
+              context,
+              titleTextField: AppLocalizations.of(context)!.password,
               formControlName: 'password',
               controller: passwordController,
               onPressed: onPressed,
               isVisible: isVisible,
-              validationMessages: StringConfigs.validationMessagesPassword,
+              validationMessages:
+                  StringConfigs.validationMessagesPassword(context),
             ),
           ],
         ),
@@ -66,7 +73,8 @@ class SignUpWidget {
     );
   }
 
-  static Widget signUpButtonWidget({required VoidCallback onPress}) {
+  static Widget signUpButtonWidget(BuildContext context,
+      {required VoidCallback onPress}) {
     return Center(
       child: CustomButtonWidget.customButton(
         marginButton: const EdgeInsets.only(right: 27.5, top: 26),
@@ -76,32 +84,38 @@ class SignUpWidget {
         boderRadius: 30,
         onPress: onPress,
         widget: CustomTextWidget.textCustom(
-            text: 'SIGN UP', color: AppColors.primaryBackgroundColor),
+            text: AppLocalizations.of(context)!.signUpUpper,
+            color: AppColors.primaryBackgroundColor),
       ),
     );
   }
 
-  static Widget alreadyAccountQuestion({required VoidCallback onPressed}) {
+  static Widget alreadyAccountQuestion(BuildContext context,
+      {required VoidCallback onPressed}) {
     return CustomButtonWidget.alreadyAccountOrDont(
-      status: 'Already have an account?',
-      statusTextForButton: 'Login',
+      context,
+      status: AppLocalizations.of(context)!.alreadyAccount,
+      statusTextForButton: AppLocalizations.of(context)!.signIn,
       onPressed: onPressed,
       color: AppColors.primaryTitleColor,
       colorButton: AppColors.primaryColor,
     );
   }
 
-  static Widget signUpWithPhoneNumber({required VoidCallback onPressed}) {
+  static Widget signUpWithPhoneNumber(BuildContext context,
+      {required VoidCallback onPressed}) {
     return CustomButtonWidget.alreadyAccountOrDont(
-      status: 'Sign up with phone number?',
-      statusTextForButton: 'Click here',
+      context,
+      status: AppLocalizations.of(context)!.signUpWithPhone,
+      statusTextForButton: AppLocalizations.of(context)!.clickHere,
       onPressed: onPressed,
       color: AppColors.primaryTitleColor,
       colorButton: AppColors.primaryColor,
     );
   }
 
-  static Widget resendButtonWidget({required VoidCallback onPress}) {
+  static Widget resendButtonWidget(BuildContext context,
+      {required VoidCallback onPress}) {
     return Center(
       child: CustomButtonWidget.customButton(
         height: 60,
@@ -113,12 +127,14 @@ class SignUpWidget {
         boderRadius: 30,
         onPress: onPress,
         widget: CustomTextWidget.textCustom(
-            text: 'RESEND EMAIL', color: AppColors.primaryBackgroundColor),
+            text: AppLocalizations.of(context)!.resendEmail,
+            color: AppColors.primaryBackgroundColor),
       ),
     );
   }
 
-  static Widget cancelButton({required VoidCallback onPress}) {
+  static Widget cancelButton(BuildContext context,
+      {required VoidCallback onPress}) {
     return Center(
       child: CustomButtonWidget.customButton(
         height: 40,
@@ -130,7 +146,8 @@ class SignUpWidget {
         boderRadius: 30,
         onPress: onPress,
         widget: CustomTextWidget.textCustom(
-            text: 'CANCEL', color: AppColors.primaryColor),
+            text: AppLocalizations.of(context)!.cancelUpper,
+            color: AppColors.primaryColor),
       ),
     );
   }

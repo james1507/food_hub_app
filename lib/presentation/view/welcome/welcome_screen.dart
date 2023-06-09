@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/presentation/util/custom_style.dart';
@@ -12,6 +12,7 @@ import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
 import 'package:food_hub_app/presentation/view/welcome/widgets/welcome_widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WelcomeScreen extends ConsumerStatefulWidget {
   const WelcomeScreen({super.key});
@@ -45,7 +46,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
           exit(0);
         } else {
           Fluttertoast.showToast(
-            msg: "press another time to exit from app",
+            msg: AppLocalizations.of(context)!.messageExit,
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
@@ -80,17 +81,18 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  WelcomeWidget.skipButtonWidget(),
-                  WelcomeWidget.titleWelcome(),
+                  WelcomeWidget.skipButtonWidget(context),
+                  WelcomeWidget.titleWelcome(context),
                   Column(
                     children: [
-                      CustomTextWidget.signInWith(
+                      CustomTextWidget.signInWith(context,
                           colorLine: AppColors.primaryBackgroundColor),
                       CustomWidget.spaceH(20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CustomButtonWidget.authSocialLoginButton(
+                            context,
                             onPress: () {
                               ref
                                   .read(authControllerProvider.notifier)
@@ -100,27 +102,46 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                             text: 'FACEBOOK',
                           ),
                           CustomWidget.spaceW(20),
-                          CustomButtonWidget.authSocialLoginButton(
-                            onPress: () {
-                              ref
-                                  .read(authControllerProvider.notifier)
-                                  .loginWithGoogle(context);
-                            },
-                            socialPic: ImagePaths.googleIcon,
-                            text: 'GOOGLE',
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                style: CustomStyle.buttonAuthSocial(context),
+                                onPressed: () {
+                                  ref
+                                      .read(authControllerProvider.notifier)
+                                      .loginWithGoogle(context);
+                                },
+                                child: Row(
+                                  children: [
+                                    ImagePaths.googleIcon,
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      'GOOGLE',
+                                      style: CustomStyle.boldPrimary14(context),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                       CustomWidget.spaceH(30),
                       WelcomeWidget.startWithEmailOrPhoneButton(
+                        context,
                         onPressed: () {
                           Navigator.pushNamed(context, '/sign_up');
                         },
                       ),
                       CustomWidget.spaceH(10),
                       CustomButtonWidget.alreadyAccountOrDont(
-                        status: 'Already have an account?',
-                        statusTextForButton: 'Sign In',
+                        context,
+                        status: AppLocalizations.of(context)!.alreadyAccount,
+                        statusTextForButton:
+                            AppLocalizations.of(context)!.signIn,
                         underline: true,
                         onPressed: () {
                           Navigator.pushNamed(context, '/login');

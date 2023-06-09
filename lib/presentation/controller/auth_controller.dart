@@ -3,11 +3,9 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:food_hub_app/data/auth_data/auth_service.dart';
 import 'package:food_hub_app/model/login_model.dart';
 import 'package:food_hub_app/model/sign_up_model.dart';
-import 'package:food_hub_app/presentation/util/app_colors.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
 
 class AuthControllerNotifier extends StateNotifier<bool> {
@@ -169,8 +167,6 @@ class AuthControllerNotifier extends StateNotifier<bool> {
       await ref
           .read(authServiceProvider)
           .signUpWithEmailAndPassword(signUpModel: signUpModel);
-
-      
 
       state = true;
     } on FirebaseAuthException catch (e) {

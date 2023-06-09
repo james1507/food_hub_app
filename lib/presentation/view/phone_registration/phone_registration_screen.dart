@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,6 +8,7 @@ import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widg
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
 import 'package:food_hub_app/presentation/view/phone_registration/widgets/phone_res_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 List<String> listCountryCode = <String>['VN', 'KR', 'JP', 'US'];
 List<Map<String, String>> listCountryCodePhone = [
@@ -44,7 +44,6 @@ class _PhoneRegistrationScreenState
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: AppColors.primaryBackgroundColor,
       body: LayoutBuilder(
@@ -57,12 +56,14 @@ class _PhoneRegistrationScreenState
                   children: [
                     CustomWidget.topImage(context),
                     CustomButtonWidget.backButton(
+                      context,
                       onPressed: () {},
                     ),
                   ],
                 ),
                 CustomWidget.spaceH(100),
-                CustomTextWidget.titleName("Registration"),
+                CustomTextWidget.titleName(
+                    context, AppLocalizations.of(context)!.registrationPhone),
                 CustomWidget.spaceH(15),
                 Expanded(
                   flex: 7,
@@ -74,10 +75,9 @@ class _PhoneRegistrationScreenState
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Enter your phone number to verify \n"
-                          "your account",
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.of(context)!.titleRegistrationPhone,
+                          style: const TextStyle(
                             fontFamily: 'Sofia Pro',
                             fontSize: 14,
                             color: AppColors.textColor,
@@ -133,12 +133,16 @@ class _PhoneRegistrationScreenState
                                         });
                                       } else if (value.length < 9) {
                                         setState(() {
-                                          checkPhoneTypeText = "invalid value";
+                                          checkPhoneTypeText =
+                                              AppLocalizations.of(context)!
+                                                  .invalidValue;
                                           checkPhoneType = false;
                                         });
                                       } else if (value.length > 10) {
                                         setState(() {
-                                          checkPhoneTypeText = "invalid value";
+                                          checkPhoneTypeText =
+                                              AppLocalizations.of(context)!
+                                                  .invalidValue;
                                           checkPhoneType = false;
                                         });
                                       } else {
@@ -170,10 +174,11 @@ class _PhoneRegistrationScreenState
                         Center(
                             child: Text(
                           checkPhoneTypeText,
-                          style: TextStyle(color: Colors.red),
+                          style: const TextStyle(color: Colors.red),
                         )),
                         CustomWidget.spaceH(51),
                         PhoneResWidget.loginButtonWidget(
+                          context,
                           onPress: () {
                             if (checkPhoneType == true) {
                               ref.read(authControllerProvider.notifier).sendOtpCode(
@@ -182,7 +187,7 @@ class _PhoneRegistrationScreenState
                                       "${listCountryCodePhone[dropDownIndex].values.toString().replaceAll("(", "").replaceAll(")", "")}${phoneTextField.text}");
                             } else {
                               setState(() {
-                                checkPhoneTypeText = "invalid value";
+                                AppLocalizations.of(context)!.invalidValue;
                                 checkPhoneType = false;
                               });
                             }

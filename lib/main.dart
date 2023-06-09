@@ -1,12 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:food_hub_app/firebase_options.dart';
+import 'package:food_hub_app/presentation/util/l10n/l10n.dart';
 import 'package:food_hub_app/presentation/view/home/food_hub_screen.dart';
 import 'package:food_hub_app/presentation/view/login/login_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/presentation/view/phone_registration/phone_registration_screen.dart';
 import 'package:food_hub_app/presentation/view/phone_registration/verification_screen.dart';
 import 'package:food_hub_app/presentation/view/sign_up/verification_email_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:food_hub_app/presentation/view/view.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -19,12 +22,12 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MaterialApp( 
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -43,6 +46,13 @@ class MyApp extends StatelessWidget {
       },
       initialRoute: '/',
       builder: EasyLoading.init(),
+      supportedLocales: L10n.all,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
     );
   }
 }

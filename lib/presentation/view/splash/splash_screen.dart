@@ -1,6 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:food_hub_app/presentation/controller/auth_controller.dart';
 import 'package:food_hub_app/presentation/util/util.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
@@ -15,13 +16,17 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(seconds: 3))
-        .then((value) => Navigator.pushNamed(context, '/welcome'));
+    if (FirebaseAuth.instance.currentUser?.uid == null) {
+      Future.delayed(const Duration(seconds: 3))
+          .then((value) => Navigator.pushNamed(context, '/welcome'));
+    } else {
+      Future.delayed(const Duration(seconds: 3))
+          .then((value) => Navigator.pushNamed(context, '/verification_email'));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       body: Center(

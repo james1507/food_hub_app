@@ -12,6 +12,7 @@ import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widg
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
 import 'package:food_hub_app/presentation/view/sign_up/widgets/sign_up_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
@@ -33,6 +34,13 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   SignUpModel signUpModel = const SignUpModel();
 
   @override
+  void dispose() {
+    super.dispose();
+
+    SignUpWidget.formLoginGroup.reset();
+  }
+
+  @override
   Widget build(BuildContext context) {
     ref.listen(authControllerProvider, ((previous, next) {
       if (next == true) {
@@ -50,9 +58,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
           children: [
             CustomWidget.topImage(context),
             CustomWidget.spaceH(10),
-            CustomTextWidget.titleName("Sign Up"),
+            CustomTextWidget.titleName(
+                context, AppLocalizations.of(context)!.signUp),
             CustomWidget.spaceH(31),
             SignUpWidget.reactiveFormSignUp(
+              context,
               onPressed: () {
                 setState(
                   () {
@@ -66,6 +76,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               passwordController: passwordController,
             ),
             SignUpWidget.signUpButtonWidget(
+              context,
               onPress: () {
                 setState(() {
                   signUpModel = signUpModel.copyWith(
@@ -79,7 +90,8 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       .signUpWithEmailAndPassWord(signUpModel, context);
                 } else {
                   CustomWidget.errorDialog(context,
-                      errorString: "Please enter done input");
+                      errorString:
+                          AppLocalizations.of(context)!.dialogEnterInput);
                 }
 
                 // await signUpUser(signUpModel: signUpModel);
@@ -87,17 +99,19 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             ),
             CustomWidget.spaceH(10),
             SignUpWidget.signUpWithPhoneNumber(
+              context,
               onPressed: () {
                 Navigator.pushNamed(context, '/sign_up_phone');
               },
             ),
             SignUpWidget.alreadyAccountQuestion(
+              context,
               onPressed: () {
                 Navigator.pushNamed(context, '/login');
               },
             ),
             CustomWidget.spaceH(10),
-            CustomTextWidget.signInWith(
+            CustomTextWidget.signInWith(context,
                 colorText: AppColors.titleTextFieldColor,
                 colorLine: AppColors.titleTextFieldColor),
             CustomWidget.spaceH(20),
@@ -105,6 +119,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomButtonWidget.authSocialLoginButton(
+                  context,
                   onPress: () {
                     ref
                         .read(authControllerProvider.notifier)
@@ -115,6 +130,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 ),
                 CustomWidget.spaceW(20),
                 CustomButtonWidget.authSocialLoginButton(
+                  context,
                   onPress: () {
                     ref
                         .read(authControllerProvider.notifier)

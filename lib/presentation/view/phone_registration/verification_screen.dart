@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/presentation/controller/auth_controller.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
 import 'package:food_hub_app/presentation/util/image_paths.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:pinput/pinput.dart';
 
@@ -116,16 +117,16 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
                 const SizedBox(
                   height: 80,
                 ),
-                const Expanded(
+                Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                       left: 25,
                       top: 20,
                     ),
                     child: Text(
-                      "Verification",
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.verificationPhone,
+                      style: const TextStyle(
                         fontFamily: 'Sofia Pro',
                         fontSize: 36.41,
                         fontWeight: FontWeight.bold,
@@ -146,10 +147,9 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Enter your phone number to verify \n"
-                          "your account",
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.of(context)!.titleVerificationPhone,
+                          style: const TextStyle(
                             fontFamily: 'Sofia Pro',
                             fontSize: 14,
                             color: AppColors.textColor,

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:food_hub_app/data/auth_data/auth_service.dart';
 import 'package:food_hub_app/presentation/controller/auth_controller.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widget.dart';
@@ -11,6 +10,7 @@ import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
 import 'package:food_hub_app/presentation/view/home/food_hub_screen.dart';
 import 'package:food_hub_app/presentation/view/sign_up/widgets/sign_up_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class VerificationEmailScreen extends ConsumerStatefulWidget {
   const VerificationEmailScreen({super.key});
@@ -85,12 +85,16 @@ class _VerificationEmailScreenState
                         children: [
                           CustomWidget.topImage(context),
                           CustomButtonWidget.backButton(
+                            context,
                             onPressed: () {},
                           ),
                         ],
                       ),
                       CustomWidget.spaceH(100),
-                      CustomTextWidget.titleName("Verification Email"),
+                      CustomTextWidget.titleName(
+                        context,
+                        AppLocalizations.of(context)!.verificationEmail,
+                      ),
                       CustomWidget.spaceH(15),
                       Expanded(
                         flex: 7,
@@ -103,7 +107,8 @@ class _VerificationEmailScreenState
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "A verification email has been sent to your email ${user}",
+                                AppLocalizations.of(context)!
+                                    .titleVerificationEmail(user?.email),
                                 style: const TextStyle(
                                   fontFamily: 'Sofia Pro',
                                   fontSize: 14,
@@ -111,9 +116,10 @@ class _VerificationEmailScreenState
                                 ),
                               ),
                               CustomWidget.spaceH(38),
-                              SignUpWidget.resendButtonWidget(onPress: () {}),
+                              SignUpWidget.resendButtonWidget(context,
+                                  onPress: () {}),
                               CustomWidget.spaceH(38),
-                              SignUpWidget.cancelButton(onPress: () {
+                              SignUpWidget.cancelButton(context, onPress: () {
                                 FirebaseAuth.instance.signOut();
                                 ref
                                     .read(authControllerProvider.notifier)
