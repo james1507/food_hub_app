@@ -26,6 +26,8 @@ abstract class AuthService {
 
   Future<UserCredential> signInWithFacebook();
 
+  Future<UserCredential> signInAnonymously();
+
   logout();
 }
 
@@ -97,7 +99,9 @@ class AuthServiceImpl implements AuthService {
     )
         .then((value) async {
       try {
-        await value.user!.sendEmailVerification();
+        if (value.user!.emailVerified == false) {
+          await value.user!.sendEmailVerification();
+        }
       } on FirebaseAuthException catch (e) {
         log(e.code);
       } catch (e) {
@@ -106,7 +110,6 @@ class AuthServiceImpl implements AuthService {
 
       return value;
     });
-    ;
 
     return credential;
   }
@@ -128,7 +131,9 @@ class AuthServiceImpl implements AuthService {
         .signInWithCredential(credential)
         .then((value) async {
       try {
-        await value.user!.sendEmailVerification();
+        if (value.user!.emailVerified == false) {
+          await value.user!.sendEmailVerification();
+        }
       } on FirebaseAuthException catch (e) {
         log(e.code);
       } catch (e) {
@@ -150,13 +155,22 @@ class AuthServiceImpl implements AuthService {
         .signInWithCredential(credential)
         .then((value) async {
       try {
-        await value.user!.sendEmailVerification();
+        if (value.user!.emailVerified == false) {
+          await value.user!.sendEmailVerification();
+        }
       } on FirebaseAuthException catch (e) {
         log(e.code);
       } catch (e) {
         log(e.toString());
       }
 
+      return value;
+    });
+  }
+
+  @override
+  Future<UserCredential> signInAnonymously() async {
+    return await FirebaseAuth.instance.signInAnonymously().then((value) {
       return value;
     });
   }

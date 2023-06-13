@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_hub_app/presentation/controller/auth_phone_controller.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
 import 'package:food_hub_app/presentation/controller/auth_controller.dart';
 import 'package:food_hub_app/presentation/view/home/datas/drawer_item.dart';
@@ -141,6 +142,7 @@ class _FoodHubScreenState extends ConsumerState<FoodHubScreen> {
                     },
                   ), ModalRoute.withName('/welcome'));
                   ref.read(authControllerProvider.notifier).logout();
+                  ref.read(authPhoneControllerProvider.notifier).logout();
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

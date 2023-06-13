@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_hub_app/data/notification/local_notification.dart';
 import 'package:food_hub_app/presentation/util/util.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {

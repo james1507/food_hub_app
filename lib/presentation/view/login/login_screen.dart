@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_hub_app/data/notification/local_notification.dart';
 import 'package:food_hub_app/model/login_model.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
 import 'package:food_hub_app/presentation/util/image_paths.dart';
@@ -40,11 +42,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     ref.listen(authControllerProvider, ((previous, next) {
       if (next == true) {
-        if (FirebaseAuth.instance.currentUser?.phoneNumber == null) {
+        if (FirebaseAuth.instance.currentUser?.isAnonymous == false) {
           Navigator.pushNamed(context, '/verification_email');
         } else {
           Navigator.pushNamed(context, '/home');
         }
+        FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+            FlutterLocalNotificationsPlugin();
+        LocalNotification.showNotification(
+            title: AppLocalizations.of(context)!.notification,
+            body: AppLocalizations.of(context)!.signInSuccess,
+            fln: flutterLocalNotificationsPlugin);
       }
     }));
 
@@ -93,7 +101,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ref
                       .watch(authControllerProvider.notifier)
                       .loginWithEmailAndPassWord(loginModel, context);
-                  
                 } else {
                   CustomWidget.errorDialog(context,
                       errorString: "Please enter done input");

@@ -46,6 +46,11 @@
     "validationMessagesPasswordLength": "The password must be at least 8 characters",
     "validationMessagesPhone": "The phone must not be empty",
     "validationMessagesPhoneInvalid": "The phone value must be a valid phone",
-    "fontApp": "Sofia Pro"
+    "fontApp": "Sofia Pro",
+    "notification": "Notification",
+    "signUpSuccess": "Sign Up Success",
+    "signInSuccess": "Sign In Success",
+    "notReceivedPhoneOTP": "You have not received the code?",
+    "resend": "Resend"
     
 }

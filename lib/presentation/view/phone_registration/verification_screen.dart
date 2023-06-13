@@ -2,9 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/presentation/controller/auth_controller.dart';
+import 'package:food_hub_app/presentation/controller/auth_phone_controller.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
 import 'package:food_hub_app/presentation/util/image_paths.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:food_hub_app/presentation/view/phone_registration/widgets/phone_res_widget.dart';
 
 import 'package:pinput/pinput.dart';
 
@@ -52,13 +54,9 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(authControllerProvider, ((previous, next) {
+    ref.listen(authPhoneControllerProvider, ((previous, next) {
       if (next == true) {
-        if (FirebaseAuth.instance.currentUser?.phoneNumber == null) {
-          Navigator.pushNamed(context, '/verification_email');
-        } else {
-          Navigator.pushNamed(context, '/home');
-        }
+        Navigator.pushNamed(context, '/home');
       }
     }));
     return WillPopScope(
@@ -176,7 +174,7 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
                                 PinputAutovalidateMode.onSubmit,
                             onCompleted: (pin) {
                               ref
-                                  .read(authControllerProvider.notifier)
+                                  .read(authPhoneControllerProvider.notifier)
                                   .signUpWithPhone(context,
                                       smsCode: pin,
                                       verificationId: verificationId);
@@ -186,8 +184,12 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
                             controller: pinController,
                           ),
                           const SizedBox(
-                            height: 50,
+                            height: 15,
                           ),
+                          PhoneResWidget.resendOTP(
+                            context,
+                            onPressed: () {},
+                          )
                         ],
                       ),
                     ),

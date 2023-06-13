@@ -79,4 +79,16 @@ class PhoneResWidget {
       ),
     );
   }
+
+  static Widget resendOTP(BuildContext context,
+      {required VoidCallback onPressed}) {
+    return CustomButtonWidget.alreadyAccountOrDont(
+      context,
+      status: AppLocalizations.of(context)!.notReceivedPhoneOTP,
+      statusTextForButton: AppLocalizations.of(context)!.resend,
+      onPressed: onPressed,
+      color: AppColors.primaryTitleColor,
+      colorButton: AppColors.primaryColor,
+    );
+  }
 }

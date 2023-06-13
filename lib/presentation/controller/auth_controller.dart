@@ -53,43 +53,7 @@ class AuthControllerNotifier extends StateNotifier<bool> {
     }
   }
 
-  void signUpWithPhone(BuildContext context,
-      {String? verificationId, String? smsCode}) async {
-    try {
-      showDialog(
-        context: context,
-        builder: (context) => const Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
-      await ref
-          .read(authServiceProvider)
-          .signUpWithPhone(verificationId: verificationId, smsCode: smsCode);
-      state = true;
-    } on FirebaseAuthException catch (e) {
-      Navigator.of(context).pop();
-      if (e.code == 'invalid-phone-number') {
-        CustomWidget.errorDialog(context,
-            errorString: "The provided phone number is not valid.");
-        log("The provided phone number is not valid.");
-      }
-    } catch (e) {
-      Navigator.of(context).pop();
-      CustomWidget.errorDialog(context,
-          errorString: "An unexpected error occurred");
-      log(e.toString());
-    }
-  }
-
-  void sendOtpCode(BuildContext context, {String phone = ""}) async {
-    showDialog(
-      context: context,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-    await ref.read(authServiceProvider).sendOtpPhone(context, phone: phone);
-  }
+  
 
   void loginWithFacebook(BuildContext context) async {
     showDialog(
@@ -197,6 +161,7 @@ class AuthControllerNotifier extends StateNotifier<bool> {
 
   // void verifyEmail() async {
   //   try {
+
   //     await ref.read(authServiceProvider).verifyEmail();
   //   } catch (e) {
   //     print(e.toString());
@@ -211,6 +176,30 @@ class AuthControllerNotifier extends StateNotifier<bool> {
   //     );
   //   }
   // }
+
+  void signInAnonymously(BuildContext context) async {
+    try {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(child: CircularProgressIndicator());
+        },
+      );
+      await ref.read(authServiceProvider).signInAnonymously();
+      state = true;
+    } on FirebaseAuthException catch (e) {
+      Navigator.of(context).pop();
+      if (e.code == 'operation-not-allowed') {
+        CustomWidget.errorDialog(context,
+            errorString:
+                "Anonymous auth hasn't been enabled for this project.");
+      }
+    } catch (e) {
+      Navigator.of(context).pop();
+      CustomWidget.errorDialog(context,
+          errorString: "An unexpected error occurred");
+    }
+  }
 
   void logout() async {
     await ref.read(authServiceProvider).logout();

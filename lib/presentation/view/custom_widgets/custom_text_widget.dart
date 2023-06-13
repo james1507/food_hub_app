@@ -7,7 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class CustomTextWidget {
   static Widget textCustom({
     String text = "",
-    double fontSize = 14,
+    double fontSize = 14, 
     Color color = AppColors.primaryColor,
   }) {
     return Text(

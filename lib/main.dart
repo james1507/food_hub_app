@@ -1,5 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:food_hub_app/data/notification/firebase_notification.dart';
+import 'package:food_hub_app/data/notification/local_notification.dart';
 import 'package:food_hub_app/firebase_options.dart';
 import 'package:food_hub_app/presentation/util/l10n/l10n.dart';
 import 'package:food_hub_app/presentation/view/home/food_hub_screen.dart';
@@ -19,6 +22,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FirebaseNotification().initNotification();
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  LocalNotification.initialize(flutterLocalNotificationsPlugin);
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -27,7 +36,7 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp( 
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(

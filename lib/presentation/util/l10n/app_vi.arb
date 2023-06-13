@@ -46,6 +46,10 @@
     "validationMessagesPasswordLength": "Mật khẩu của bạn phải có ít nhất 8 ký tự",
     "validationMessagesPhone": "Số điện thoại của bạn không được bỏ trống",
     "validationMessagesPhoneInvalid": "Số điện thoại của bạn không đúng kiểu",
-    "fontApp": "Time new"
-
+    "fontApp": "Time new",
+    "notification": "Thông báo",
+    "signUpSuccess": "Đăng ký thành công",
+    "signInSuccess": "Đăng nhập thành công",
+    "notReceivedPhoneOTP": "Bạn chưa nhận được mã?",
+    "resend": "Gửi lại"
 }

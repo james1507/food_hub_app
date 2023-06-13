@@ -2,8 +2,10 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/data/auth_data/auth_service.dart';
+import 'package:food_hub_app/data/notification/local_notification.dart';
 import 'package:food_hub_app/model/sign_up_model.dart';
 // import 'package:food_hub_app/data/auth_data/auth_service.dart';
 import 'package:food_hub_app/presentation/util/util.dart';
@@ -24,6 +26,8 @@ class SignUpScreen extends ConsumerStatefulWidget {
 class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   bool _passwordVisible = false;
   AuthServiceImpl authServiceImpl = AuthServiceImpl();
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
   String errorFullName = "";
   String errorEmail = "";
   String errorPassword = "";
@@ -44,11 +48,15 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   Widget build(BuildContext context) {
     ref.listen(authControllerProvider, ((previous, next) {
       if (next == true) {
-        if (FirebaseAuth.instance.currentUser?.phoneNumber == null) {
+        if (FirebaseAuth.instance.currentUser?.isAnonymous == false) {
           Navigator.pushNamed(context, '/verification_email');
         } else {
           Navigator.pushNamed(context, '/home');
         }
+        LocalNotification.showNotification(
+            title: AppLocalizations.of(context)!.notification,
+            body: AppLocalizations.of(context)!.signUpSuccess,
+            fln: flutterLocalNotificationsPlugin);
       }
     }));
     return Scaffold(

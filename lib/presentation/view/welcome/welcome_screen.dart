@@ -1,9 +1,12 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_hub_app/data/notification/local_notification.dart';
 import 'package:food_hub_app/presentation/util/custom_style.dart';
 import 'package:food_hub_app/presentation/util/util.dart';
 import 'package:food_hub_app/presentation/controller/auth_controller.dart';
@@ -27,11 +30,14 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
   DateTime? currentBackPressTime;
   var presscount = 0;
 
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
   @override
   Widget build(BuildContext context) {
     ref.listen(authControllerProvider, ((previous, next) {
-      if (next == true) {
-        if (FirebaseAuth.instance.currentUser?.phoneNumber == null) {
+      if (next) {
+        if (FirebaseAuth.instance.currentUser?.isAnonymous == false) {
           Navigator.pushNamed(context, '/verification_email');
         } else {
           Navigator.pushNamed(context, '/home');
@@ -59,10 +65,6 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
             textColor: AppColors.primaryTitleColor,
             fontSize: 16.0,
           );
-          // var snackBar = const SnackBar(
-          //     content:
-          //         Center(child: Text('press another time to exit from app')));
-          // ScaffoldMessenger.of(context).showSnackBar(snackBar);
           return false;
         }
       },
@@ -86,7 +88,14 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  WelcomeWidget.skipButtonWidget(context),
+                  WelcomeWidget.skipButtonWidget(
+                    context,
+                    onPress: () {
+                      ref
+                          .read(authControllerProvider.notifier)
+                          .signInAnonymously(context);
+                    },
+                  ),
                   WelcomeWidget.titleWelcome(context),
                   Column(
                     children: [

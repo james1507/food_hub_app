@@ -42,7 +42,7 @@ class SignUpWidget {
           children: [
             CustomTextFieldWidget.customReactiveTextField(
               context,
-              titleTextField: AppLocalizations.of(context)!.signIn,
+              titleTextField: AppLocalizations.of(context)!.fullName,
               formControlName: 'name',
               controller: fullNameController,
               validationMessages: StringConfigs.validationMessagesName(context),

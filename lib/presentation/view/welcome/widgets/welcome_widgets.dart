@@ -6,14 +6,15 @@ import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WelcomeWidget {
-  static Widget skipButtonWidget(BuildContext context) {
+  static Widget skipButtonWidget(BuildContext context,
+      {required VoidCallback onPress}) {
     return CustomButtonWidget.customButton(
-      marginButton: const EdgeInsets.only(right: 27.5, top: 26),
+      marginButton: const EdgeInsets.only(right: 27.5, top: 30),
       height: 31,
       width: 55,
       backgroundColor: AppColors.primaryBackgroundColor,
       boderRadius: 20,
-      onPress: () {},
+      onPress: onPress,
       widget:
           CustomTextWidget.textCustom(text: AppLocalizations.of(context)!.skip),
     );
