@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/presentation/controller/auth_phone_controller.dart';
@@ -12,6 +15,7 @@ import 'package:food_hub_app/presentation/view/login/login_screen.dart';
 
 class FoodHubScreen extends ConsumerStatefulWidget {
   const FoodHubScreen({super.key});
+  static const route = '/home';
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _FoodHubScreenState();
