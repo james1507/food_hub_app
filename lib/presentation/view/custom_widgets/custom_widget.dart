@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:food_hub_app/presentation/util/util.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -45,11 +46,11 @@ class CustomWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.error),
+          title: Text('shareDialogTextError'.tr()),
           content: Text(errorString),
           actions: [
             TextButton(
-              child: Text(AppLocalizations.of(context)!.close),
+              child: Text('shareDialogTextClose'.tr()),
               onPressed: () {
                 Navigator.of(context).pop();
               },

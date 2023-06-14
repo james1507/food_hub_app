@@ -56,7 +56,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           exit(0);
         } else {
           Fluttertoast.showToast(
-            msg: AppLocalizations.of(context)!.messageExit,
+            msg: AppLocalizations.of(context)?.messageExit ?? "",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
@@ -114,7 +114,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 const SizedBox(
                   height: 25,
                 ),
-                CategoriesWidget(),
+                const CategoriesWidget(),
                 const SizedBox(
                   height: 15,
                 ),
@@ -627,53 +627,52 @@ class CategoriesWidget extends StatefulWidget {
 }
 
 class _CategoriesWidgetState extends State<CategoriesWidget> {
-  bool isCurrentClick = true;
+  int _valueClick = 0;
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: FoodItems.all
-            .map((item) => Row(
-                  children: [
-                    SizedBox(
-                        width: 70,
-                        height: 120,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(
-                              isCurrentClick
-                                  ? AppColors.primaryColor
-                                  : AppColors.primaryBackgroundColor,
-                            ),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(40.0),
-                              ),
-                            ),
-                            padding: const MaterialStatePropertyAll(
-                              EdgeInsets.only(left: 5, right: 5, top: 5),
-                            ),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              item.isClick = !item.isClick;
-                            });
-                            if (isCurrentClick) {
-                              print("${FoodItems.all.indexOf(item)}");
-                            }
-                          },
-                          child: _buildfoodCategory(
-                              item.icon, item.title, item.isClick),
-                        )),
-                    const SizedBox(
-                      width: 10,
-                    )
-                  ],
-                ))
-            .toList(),
+    return SizedBox(
+      height: 150,
+      child: ListView.builder(
+        itemCount: FoodItems.all.length,
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return Row(
+            children: [
+              SizedBox(
+                  width: 70,
+                  height: 120,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(
+                        _valueClick == index
+                            ? AppColors.primaryColor
+                            : AppColors.primaryBackgroundColor,
+                      ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                      ),
+                      padding: const MaterialStatePropertyAll(
+                        EdgeInsets.only(left: 5, right: 5, top: 5),
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _valueClick = index;
+                      });
+                    },
+                    child: _buildfoodCategory(FoodItems.all[index].icon,
+                        FoodItems.all[index].title, _valueClick == index),
+                  )),
+              const SizedBox(
+                width: 10,
+              )
+            ],
+          );
+        },
       ),
     );
   }

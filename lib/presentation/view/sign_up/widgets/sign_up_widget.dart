@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
 import 'package:food_hub_app/presentation/util/strings_config.dart';
@@ -42,14 +43,14 @@ class SignUpWidget {
           children: [
             CustomTextFieldWidget.customReactiveTextField(
               context,
-              titleTextField: AppLocalizations.of(context)!.fullName,
+              titleTextField: 'signupTextFullName'.tr(),
               formControlName: 'name',
               controller: fullNameController,
               validationMessages: StringConfigs.validationMessagesName(context),
             ),
             CustomTextFieldWidget.customReactiveTextField(
               context,
-              titleTextField: AppLocalizations.of(context)!.email,
+              titleTextField: 'shareTextEmail'.tr(),
               formControlName: 'email',
               controller: emailController,
               validationMessages:
@@ -59,7 +60,7 @@ class SignUpWidget {
             CustomWidget.spaceH(29),
             CustomTextFieldWidget.customReactivePassTextField(
               context,
-              titleTextField: AppLocalizations.of(context)!.password,
+              titleTextField: 'shareTextPassword'.tr(),
               formControlName: 'password',
               controller: passwordController,
               onPressed: onPressed,
@@ -84,7 +85,7 @@ class SignUpWidget {
         boderRadius: 30,
         onPress: onPress,
         widget: CustomTextWidget.textCustom(
-            text: AppLocalizations.of(context)!.signUpUpper,
+            text: 'shareTextSignUpUpper'.tr(),
             color: AppColors.primaryBackgroundColor),
       ),
     );
@@ -94,8 +95,8 @@ class SignUpWidget {
       {required VoidCallback onPressed}) {
     return CustomButtonWidget.alreadyAccountOrDont(
       context,
-      status: AppLocalizations.of(context)!.alreadyAccount,
-      statusTextForButton: AppLocalizations.of(context)!.signIn,
+      status: 'shareTextAlreadyAccount'.tr(),
+      statusTextForButton: 'shareTextSignIn'.tr(),
       onPressed: onPressed,
       color: AppColors.primaryTitleColor,
       colorButton: AppColors.primaryColor,
@@ -106,8 +107,8 @@ class SignUpWidget {
       {required VoidCallback onPressed}) {
     return CustomButtonWidget.alreadyAccountOrDont(
       context,
-      status: AppLocalizations.of(context)!.signUpWithPhone,
-      statusTextForButton: AppLocalizations.of(context)!.clickHere,
+      status: 'signUpTextSignUpWithPhone'.tr(),
+      statusTextForButton: 'signUpTextClickHere'.tr(),
       onPressed: onPressed,
       color: AppColors.primaryTitleColor,
       colorButton: AppColors.primaryColor,
@@ -127,7 +128,7 @@ class SignUpWidget {
         boderRadius: 30,
         onPress: onPress,
         widget: CustomTextWidget.textCustom(
-            text: AppLocalizations.of(context)!.resendEmail,
+            text: 'signUpTextResendEmail'.tr(),
             color: AppColors.primaryBackgroundColor),
       ),
     );
@@ -146,8 +147,7 @@ class SignUpWidget {
         boderRadius: 30,
         onPress: onPress,
         widget: CustomTextWidget.textCustom(
-            text: AppLocalizations.of(context)!.cancelUpper,
-            color: AppColors.primaryColor),
+            text: 'signUpTextCancelUpper'.tr(), color: AppColors.primaryColor),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
@@ -47,7 +48,7 @@ class PhoneResWidget {
         boderRadius: 30,
         onPress: onPress,
         widget: CustomTextWidget.textCustom(
-            text: AppLocalizations.of(context)!.sendUpper,
+            text: 'shareTextSendUpper'.tr(),
             color: AppColors.primaryBackgroundColor),
       ),
     );
@@ -84,8 +85,8 @@ class PhoneResWidget {
       {required VoidCallback onPressed}) {
     return CustomButtonWidget.alreadyAccountOrDont(
       context,
-      status: AppLocalizations.of(context)!.notReceivedPhoneOTP,
-      statusTextForButton: AppLocalizations.of(context)!.resend,
+      status: 'signUpNotReceivedPhoneOTP'.tr(),
+      statusTextForButton: 'signUpResend'.tr(),
       onPressed: onPressed,
       color: AppColors.primaryTitleColor,
       colorButton: AppColors.primaryColor,

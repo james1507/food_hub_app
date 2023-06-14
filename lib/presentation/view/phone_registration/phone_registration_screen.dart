@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -63,7 +64,7 @@ class _PhoneRegistrationScreenState
                 ),
                 CustomWidget.spaceH(100),
                 CustomTextWidget.titleName(
-                    context, AppLocalizations.of(context)!.registrationPhone),
+                    context, 'signUpTextRegistrationPhone'.tr()),
                 CustomWidget.spaceH(15),
                 Expanded(
                   flex: 7,
@@ -76,7 +77,7 @@ class _PhoneRegistrationScreenState
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          AppLocalizations.of(context)!.titleRegistrationPhone,
+                          'signUpTitleRegistrationPhone'.tr(),
                           style: const TextStyle(
                             fontFamily: 'Sofia Pro',
                             fontSize: 14,
@@ -134,15 +135,13 @@ class _PhoneRegistrationScreenState
                                       } else if (value.length < 9) {
                                         setState(() {
                                           checkPhoneTypeText =
-                                              AppLocalizations.of(context)!
-                                                  .invalidValue;
+                                              'signUpDialogInvalidValue'.tr();
                                           checkPhoneType = false;
                                         });
                                       } else if (value.length > 10) {
                                         setState(() {
                                           checkPhoneTypeText =
-                                              AppLocalizations.of(context)!
-                                                  .invalidValue;
+                                              'signUpDialogInvalidValue'.tr();
                                           checkPhoneType = false;
                                         });
                                       } else {
@@ -188,7 +187,7 @@ class _PhoneRegistrationScreenState
                                           "${listCountryCodePhone[dropDownIndex].values.toString().replaceAll("(", "").replaceAll(")", "")}${phoneTextField.text}");
                             } else {
                               setState(() {
-                                AppLocalizations.of(context)!.invalidValue;
+                                'signUpDialogInvalidValue'.tr();
                                 checkPhoneType = false;
                               });
                             }

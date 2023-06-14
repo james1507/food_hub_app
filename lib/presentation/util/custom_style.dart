@@ -1,18 +1,21 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'package:food_hub_app/presentation/util/util.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomStyle {
+  static final fontApp = 'shareFontApp'.tr();
+
   static TextStyle boldDark52(BuildContext context) => TextStyle(
-        fontFamily: AppLocalizations.of(context)!.fontApp,
+        fontFamily: fontApp,
         fontSize: 52,
         color: AppColors.primaryTitleColor,
         fontWeight: FontWeight.bold,
       );
 
   static TextStyle boldPrimary52(BuildContext context) => TextStyle(
-        fontFamily: AppLocalizations.of(context)!.fontApp,
+        fontFamily: fontApp,
         fontSize: 52,
         color: AppColors.primaryColor,
         fontWeight: FontWeight.bold,
@@ -20,18 +23,18 @@ class CustomStyle {
 
   static TextStyle boldPrimary18h2(BuildContext context) => TextStyle(
         height: 2,
-        fontFamily: AppLocalizations.of(context)!.fontApp,
+        fontFamily: fontApp,
         fontSize: 18,
         color: AppColors.welcomeSubtitleColor,
       );
   static TextStyle boldPrimary18(BuildContext context) => TextStyle(
-        fontFamily: AppLocalizations.of(context)!.fontApp,
+        fontFamily: fontApp,
         fontSize: 18,
         color: AppColors.welcomeSubtitleColor,
       );
 
   static TextStyle boldPrimary14(BuildContext context) => TextStyle(
-        fontFamily: AppLocalizations.of(context)!.fontApp,
+        fontFamily: fontApp,
         color: AppColors.primaryTitleColor,
         fontSize: 14,
         fontWeight: FontWeight.bold,
@@ -41,7 +44,7 @@ class CustomStyle {
       {Color color = AppColors.primaryTextColor}) {
     return TextStyle(
       fontSize: 16,
-      fontFamily: AppLocalizations.of(context)!.fontApp,
+      fontFamily: fontApp,
       color: color,
     );
   }
@@ -50,13 +53,13 @@ class CustomStyle {
       {Color color = AppColors.primaryTextColor}) {
     return TextStyle(
       fontSize: 16,
-      fontFamily: AppLocalizations.of(context)!.fontApp,
+      fontFamily: fontApp,
       color: color,
     );
   }
 
   static TextStyle underlinePrimary16(BuildContext context) => TextStyle(
-        fontFamily: AppLocalizations.of(context)!.fontApp,
+        fontFamily: fontApp,
         color: AppColors.primaryBackgroundColor,
         fontSize: 16,
         decoration: TextDecoration.underline,
@@ -64,19 +67,19 @@ class CustomStyle {
         decorationThickness: 2,
       );
 
-  static TextStyle buttonEorP16(BuildContext context) => TextStyle(
-      fontFamily: AppLocalizations.of(context)!.fontApp, fontSize: 16);
+  static TextStyle buttonEorP16(BuildContext context) =>
+      TextStyle(fontFamily: fontApp, fontSize: 16);
 
   static TextStyle titlePrimary32(BuildContext context) => TextStyle(
         fontSize: 32,
-        fontFamily: AppLocalizations.of(context)!.fontApp,
+        fontFamily: fontApp,
         color: AppColors.primaryTitleColor,
         fontWeight: FontWeight.w600,
         fontStyle: FontStyle.normal,
       );
 
   static TextStyle titleTextField(BuildContext context) => TextStyle(
-        fontFamily: AppLocalizations.of(context)!.fontApp,
+        fontFamily: fontApp,
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w400,
         fontSize: 16,
@@ -138,7 +141,6 @@ class CustomStyle {
             borderRadius: BorderRadius.circular(13.0),
           ),
         ),
-        
       );
 
   // Gradian Style

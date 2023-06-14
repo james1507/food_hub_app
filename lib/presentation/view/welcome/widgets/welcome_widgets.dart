@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:food_hub_app/presentation/util/custom_style.dart';
+import 'package:food_hub_app/presentation/util/l10n/l10n.dart';
 import 'package:food_hub_app/presentation/util/util.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 
 class WelcomeWidget {
   static Widget skipButtonWidget(BuildContext context,
@@ -15,8 +17,24 @@ class WelcomeWidget {
       backgroundColor: AppColors.primaryBackgroundColor,
       boderRadius: 20,
       onPress: onPress,
-      widget:
-          CustomTextWidget.textCustom(text: AppLocalizations.of(context)!.skip),
+      widget: CustomTextWidget.textCustom(text: 'welcomeButtonSkip'.tr()),
+    );
+  }
+
+  static Widget chooseLanguage(
+      {TextEditingController? textEditingController,
+      Function(String)? onChanged}) {
+    return Container(
+      margin: const EdgeInsets.only(left: 25, right: 27.5, top: 30),
+      height: 31,
+      width: 100,
+      child: CustomDropdown(
+        borderRadius: BorderRadius.circular(30),
+        hintText: 'choose',
+        items: const ['vn', 'en'],
+        controller: textEditingController!,
+        onChanged: onChanged,
+      ),
     );
   }
 
@@ -26,19 +44,19 @@ class WelcomeWidget {
         text: TextSpan(
           children: [
             TextSpan(
-              text: AppLocalizations.of(context)?.welcomeTo,
+              text: 'welcomeTextWelcomeTo'.tr(),
               style: CustomStyle.boldDark52(context),
             ),
             TextSpan(
-              text: AppLocalizations.of(context)?.foobHub,
+              text: 'welcomeTextFoobHub'.tr(),
               style: CustomStyle.boldPrimary52(context),
             ),
             TextSpan(
-              text: AppLocalizations.of(context)?.titleWelcome1,
+              text: 'welcomeTextTitleWelcome1'.tr(),
               style: CustomStyle.boldPrimary18h2(context),
             ),
             TextSpan(
-              text: AppLocalizations.of(context)?.titleWelcome2,
+              text: 'welcomeTextTitleWelcome2'.tr(),
               style: CustomStyle.boldPrimary18(context),
             ),
           ],
@@ -53,7 +71,7 @@ class WelcomeWidget {
       style: CustomStyle.buttonStartEmailorPhone(context),
       onPressed: onPressed,
       child: Text(
-        AppLocalizations.of(context)!.startWithEmailOrPhoneButton,
+        'welcomeButtonStartWithEmailOrPhoneButton'.tr(),
         style: CustomStyle.buttonEorP16(context),
       ),
     );

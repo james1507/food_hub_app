@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -50,8 +51,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
             FlutterLocalNotificationsPlugin();
         LocalNotification.showNotification(
-            title: AppLocalizations.of(context)!.notification,
-            body: AppLocalizations.of(context)!.signInSuccess,
+            title: 'shareNotification'.tr(),
+            body: 'shareTextSignUpSuccess'.tr(),
             fln: flutterLocalNotificationsPlugin);
       }
     }));
@@ -77,8 +78,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ],
             ),
             CustomWidget.spaceH(100),
-            CustomTextWidget.titleName(
-                context, AppLocalizations.of(context)!.signIn),
+            CustomTextWidget.titleName(context, 'shareTextSignIn'.tr()),
             CustomWidget.spaceH(31),
             LoginWidget.reactiveFormLogin(
               context,

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
 import 'package:food_hub_app/presentation/util/strings_config.dart';
@@ -40,7 +41,7 @@ class LoginWidget {
           children: [
             CustomTextFieldWidget.customReactiveTextField(
               context,
-              titleTextField: AppLocalizations.of(context)!.email,
+              titleTextField: 'shareTextEmail'.tr(),
               formControlName: 'email',
               controller: emailController,
               validationMessages:
@@ -50,7 +51,7 @@ class LoginWidget {
             CustomWidget.spaceH(29),
             CustomTextFieldWidget.customReactivePassTextField(
               context,
-              titleTextField: AppLocalizations.of(context)!.password,
+              titleTextField: 'shareTextPassword'.tr(),
               formControlName: 'password',
               controller: passwordController,
               onPressed: onPressed,
@@ -75,7 +76,7 @@ class LoginWidget {
         boderRadius: 30,
         onPress: onPress,
         widget: CustomTextWidget.textCustom(
-            text: AppLocalizations.of(context)!.signInUpper,
+            text: 'signInSignInUpper'.tr(),
             color: AppColors.primaryBackgroundColor),
       ),
     );
@@ -84,8 +85,8 @@ class LoginWidget {
   static Widget alreadyAccountQuestion(BuildContext context) {
     return CustomButtonWidget.alreadyAccountOrDont(
       context,
-      status: AppLocalizations.of(context)!.dontHaveAccount,
-      statusTextForButton: AppLocalizations.of(context)!.signUp,
+      status: 'shareDontHaveAccount'.tr(),
+      statusTextForButton: 'shareTextSignUp'.tr(),
       onPressed: () {
         Navigator.pushNamed(context, '/sign_up');
       },

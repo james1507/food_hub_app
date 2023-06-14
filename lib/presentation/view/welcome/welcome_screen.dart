@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
   String username = "";
   DateTime? currentBackPressTime;
   var presscount = 0;
+  final languageChoose = TextEditingController();
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -55,7 +57,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
           exit(0);
         } else {
           Fluttertoast.showToast(
-            msg: AppLocalizations.of(context)!.messageExit,
+            msg: 'shareDialogMessageExit'.tr(),
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
@@ -86,13 +88,31 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  WelcomeWidget.skipButtonWidget(
-                    context,
-                    onPress: () {
-                      ref
-                          .read(authControllerProvider.notifier)
-                          .signInAnonymously(context);
-                    },
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      WelcomeWidget.chooseLanguage(
+                          textEditingController: languageChoose,
+                          onChanged: (lang) {
+                            print(lang);
+
+                            if (lang == 'en') {
+                              context.setLocale(const Locale('en'));
+                            } else if (lang == 'vn') {
+                              context.setLocale(const Locale('vi'));
+                            } else {
+                              context.setLocale(const Locale('en'));
+                            }
+                          }),
+                      WelcomeWidget.skipButtonWidget(
+                        context,
+                        onPress: () {
+                          ref
+                              .read(authControllerProvider.notifier)
+                              .signInAnonymously(context);
+                        },
+                      ),
+                    ],
                   ),
                   WelcomeWidget.titleWelcome(context),
                   Column(
@@ -151,9 +171,8 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                       CustomWidget.spaceH(10),
                       CustomButtonWidget.alreadyAccountOrDont(
                         context,
-                        status: AppLocalizations.of(context)!.alreadyAccount,
-                        statusTextForButton:
-                            AppLocalizations.of(context)!.signIn,
+                        status: 'shareTextAlreadyAccount'.tr(),
+                        statusTextForButton: 'shareTextSignIn'.tr(),
                         underline: true,
                         onPressed: () {
                           Navigator.pushNamed(context, '/login');

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -109,7 +110,7 @@ class _VerificationEmailScreenState
                             CustomWidget.spaceH(100),
                             CustomTextWidget.titleName(
                               context,
-                              AppLocalizations.of(context)!.verificationEmail,
+                              'shareTextVerificationEmail'.tr(),
                             ),
                             CustomWidget.spaceH(15),
                             Expanded(
@@ -123,8 +124,8 @@ class _VerificationEmailScreenState
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      AppLocalizations.of(context)!
-                                          .titleVerificationEmail(user?.email),
+                                      'signUpTitleVerificationEmail'
+                                          .tr(args: [user?.email ?? ""]),
                                       style: const TextStyle(
                                         fontFamily: 'Sofia Pro',
                                         fontSize: 14,

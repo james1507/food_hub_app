@@ -1,5 +1,6 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -54,8 +55,8 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
           Navigator.pushNamed(context, '/home');
         }
         LocalNotification.showNotification(
-            title: AppLocalizations.of(context)!.notification,
-            body: AppLocalizations.of(context)!.signUpSuccess,
+            title: 'shareNotification'.tr(),
+            body: 'shareTextSignUpSuccess'.tr(),
             fln: flutterLocalNotificationsPlugin);
       }
     }));
@@ -66,8 +67,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
           children: [
             CustomWidget.topImage(context),
             CustomWidget.spaceH(10),
-            CustomTextWidget.titleName(
-                context, AppLocalizations.of(context)!.signUp),
+            CustomTextWidget.titleName(context, 'shareTextSignUp'.tr()),
             CustomWidget.spaceH(31),
             SignUpWidget.reactiveFormSignUp(
               context,
@@ -98,8 +98,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       .signUpWithEmailAndPassWord(signUpModel, context);
                 } else {
                   CustomWidget.errorDialog(context,
-                      errorString:
-                          AppLocalizations.of(context)!.dialogEnterInput);
+                      errorString: 'shareDialogEnterInput'.tr());
                 }
 
                 // await signUpUser(signUpModel: signUpModel);

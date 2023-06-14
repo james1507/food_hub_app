@@ -1,18 +1,19 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:food_hub_app/data/notification/firebase_notification.dart';
 import 'package:food_hub_app/data/notification/local_notification.dart';
 import 'package:food_hub_app/firebase_options.dart';
 import 'package:food_hub_app/presentation/util/l10n/l10n.dart';
+import 'package:food_hub_app/presentation/util/strings_config.dart';
 import 'package:food_hub_app/presentation/view/home/food_hub_screen.dart';
 import 'package:food_hub_app/presentation/view/login/login_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/presentation/view/phone_registration/phone_registration_screen.dart';
 import 'package:food_hub_app/presentation/view/phone_registration/verification_screen.dart';
 import 'package:food_hub_app/presentation/view/sign_up/verification_email_screen.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:food_hub_app/presentation/view/view.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -25,12 +26,21 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await FirebaseNotification().initNotifications();
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
 
-  LocalNotification.initialize(flutterLocalNotificationsPlugin);
+  await EasyLocalization.ensureInitialized();
 
-  runApp(const ProviderScope(child: MyApp()));
+  LocalNotification.initialize(FlutterLocalNotificationsPlugin());
+
+  runApp(
+    ProviderScope(
+      child: EasyLocalization(
+        path: StringConfigs.translationPath,
+        supportedLocales: L10n.all,
+        fallbackLocale: const Locale('en'),
+        child: const MyApp(),
+      ),
+    ),
+  );
 }
 
 class MyApp extends ConsumerWidget {
@@ -58,22 +68,9 @@ class MyApp extends ConsumerWidget {
       },
       initialRoute: '/',
       builder: EasyLoading.init(),
-      supportedLocales: L10n.all,
-      localeResolutionCallback: (deviceLocale, supportedLocales) {
-        for (var locale in supportedLocales) {
-          if (locale.languageCode == deviceLocale!.languageCode &&
-              locale.countryCode == deviceLocale.countryCode) {
-            return deviceLocale;
-          }
-        }
-        return supportedLocales.first;
-      },
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
+      supportedLocales: context.supportedLocales,
+      localizationsDelegates: context.localizationDelegates,
+      locale: context.locale,
     );
   }
 }

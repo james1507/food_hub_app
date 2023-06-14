@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/presentation/controller/auth_phone_controller.dart';
@@ -127,7 +128,7 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
                         top: 20,
                       ),
                       child: Text(
-                        AppLocalizations.of(context)!.verificationPhone,
+                        'signUpVerificationPhone'.tr(),
                         style: const TextStyle(
                           fontFamily: 'Sofia Pro',
                           fontSize: 36.41,
@@ -150,8 +151,7 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            AppLocalizations.of(context)!
-                                .titleVerificationPhone,
+                            'signUpTitleVerificationPhone'.tr(),
                             style: const TextStyle(
                               fontFamily: 'Sofia Pro',
                               fontSize: 14,
