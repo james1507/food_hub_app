@@ -114,9 +114,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 const SizedBox(
                   height: 25,
                 ),
-                CategoriesWidget(
-                  isClick: isClick,
-                ),
+                CategoriesWidget(),
                 const SizedBox(
                   height: 15,
                 ),
@@ -622,16 +620,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 }
 
 class CategoriesWidget extends StatefulWidget {
-  late bool isClick;
-
-  CategoriesWidget({super.key, this.isClick = true});
+  const CategoriesWidget({super.key});
 
   @override
   State<CategoriesWidget> createState() => _CategoriesWidgetState();
 }
 
 class _CategoriesWidgetState extends State<CategoriesWidget> {
-  List<bool> listClick = [true, false, false, false, false, false];
+  bool isCurrentClick = true;
 
   @override
   Widget build(BuildContext context) {
@@ -647,7 +643,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                         child: ElevatedButton(
                           style: ButtonStyle(
                             backgroundColor: MaterialStatePropertyAll(
-                              item.isClick
+                              isCurrentClick
                                   ? AppColors.primaryColor
                                   : AppColors.primaryBackgroundColor,
                             ),
@@ -663,9 +659,11 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                           ),
                           onPressed: () {
                             setState(() {
-                              item.isClick = widget.isClick;
-                              widget.isClick = !widget.isClick;
+                              item.isClick = !item.isClick;
                             });
+                            if (isCurrentClick) {
+                              print("${FoodItems.all.indexOf(item)}");
+                            }
                           },
                           child: _buildfoodCategory(
                               item.icon, item.title, item.isClick),

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:food_hub_app/data/notification/local_notification.dart';
 import 'package:food_hub_app/presentation/util/custom_style.dart';
 import 'package:food_hub_app/presentation/util/util.dart';
 import 'package:food_hub_app/presentation/controller/auth_controller.dart';

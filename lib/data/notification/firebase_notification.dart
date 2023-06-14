@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:food_hub_app/main.dart';
-import 'package:food_hub_app/presentation/view/home/food_hub_screen.dart';
 
 Future<void> handldeBackgroundMessage(RemoteMessage message) async {
   log("Title: ${message.notification?.title}");

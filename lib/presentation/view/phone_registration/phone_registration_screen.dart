@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/model/sign_up_model.dart';
-import 'package:food_hub_app/presentation/controller/auth_controller.dart';
 import 'package:food_hub_app/presentation/controller/auth_phone_controller.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
-import 'package:food_hub_app/presentation/view/phone_registration/verification_screen.dart';
 import 'package:food_hub_app/presentation/view/phone_registration/widgets/phone_res_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
