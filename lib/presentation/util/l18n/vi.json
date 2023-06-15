@@ -44,5 +44,18 @@
   "shareTextSignUpSuccess": "Đăng ký thành công",
   "shareSignInSuccess": "Đăng nhập thành công",
   "signUpNotReceivedPhoneOTP": "Bạn chưa nhận được mã?",
-  "signUpResend": "Gửi lại"
+  "signUpResend": "Gửi lại",
+  "drawerTextHome": "Trang chủ",
+  "drawerTextMyOrder": "Đơn đặt",
+  "drawerTextMyProFile": "Hồ sơ",
+  "drawerTextDeliveryAddress": "Địa chỉ vận chuyển",
+  "drawerTextPaymentMethods": "Phương thức thanh toán",
+  "drawerTextContactUs": "Kết nối với chúng tôi",
+  "drawerTextSettings": "Cài đặt",
+  "drawerTextHelpsAndFAQs": "Hỗ trợ",
+  "drawerTextLogOut": "Đăng xuất",
+  "homeTextTitle": "Bạn muốn đặt món gì",
+  "homeTextFieldHint": "Tìm kiếm thức ăn hoặc nhà hàng...",
+  "homeTextFeatureRes": "Nhà hàng nổi bật",
+  "homeTextViewAll": "Xem tất cả >"
 }

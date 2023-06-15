@@ -7,7 +7,6 @@ import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widg
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_field_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:reactive_forms/reactive_forms.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PhoneResWidget {
   static List<String> listCountryCode = <String>['VN', 'KR', 'JP', 'US'];

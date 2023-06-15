@@ -44,5 +44,19 @@
   "shareTextSignUpSuccess": "Sign Up Success",
   "shareSignInSuccess": "Sign In Success",
   "signUpNotReceivedPhoneOTP": "You have not received the code?",
-  "signUpResend": "Resend"
+  "signUpResend": "Resend",
+  "drawerTextHome": "Home",
+  "drawerTextMyOrder": "My Order",
+  "drawerTextMyProFile": "My Profile",
+  "drawerTextDeliveryAddress": "Delivery Address",
+  "drawerTextPaymentMethods": "Payment Methods",
+  "drawerTextContactUs": "Contact Us",
+  "drawerTextSettings": "Settings",
+  "drawerTextHelpsAndFAQs": "Helps & FAQs",
+  "drawerTextLogOut": "Log Out",
+  "homeTextTitle": "What would you like\nto order",
+  "homeTextFieldHint": "Find for food or restaurant...",
+  "homeTextFeatureRes": "Featured Restaurants",
+  "homeTextViewAll": "View All >"
+
 }

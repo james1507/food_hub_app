@@ -7,7 +7,6 @@ import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_field_
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
 import 'package:reactive_forms/reactive_forms.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignUpWidget {
   static final formLoginGroup = FormGroup({

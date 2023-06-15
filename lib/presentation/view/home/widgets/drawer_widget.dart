@@ -23,7 +23,7 @@ class DrawerWidget extends StatelessWidget {
 
   Widget buildDrawerItems(BuildContext context) {
     return Column(
-      children: DrawerItems.all
+      children: DrawerItems().all()
           .map(
             (item) => ListTile(
               leading: SvgPicture.asset(

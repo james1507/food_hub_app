@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/presentation/controller/auth_phone_controller.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
 import 'package:food_hub_app/presentation/util/image_paths.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:food_hub_app/presentation/view/phone_registration/widgets/phone_res_widget.dart';
 
 import 'package:pinput/pinput.dart';

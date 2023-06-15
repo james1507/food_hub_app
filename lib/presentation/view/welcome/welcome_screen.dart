@@ -14,7 +14,6 @@ import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
 import 'package:food_hub_app/presentation/view/welcome/widgets/welcome_widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WelcomeScreen extends ConsumerStatefulWidget {
   const WelcomeScreen({super.key});
@@ -91,7 +90,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      WelcomeWidget.chooseLanguage(
+                      WelcomeWidget().chooseLanguage(
                           textEditingController: languageChoose,
                           onChanged: (lang) {
                             print(lang);
@@ -104,7 +103,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                               context.setLocale(const Locale('en'));
                             }
                           }),
-                      WelcomeWidget.skipButtonWidget(
+                      WelcomeWidget().skipButtonWidget(
                         context,
                         onPress: () {
                           ref
@@ -114,7 +113,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                       ),
                     ],
                   ),
-                  WelcomeWidget.titleWelcome(context),
+                  WelcomeWidget().titleWelcome(context),
                   Column(
                     children: [
                       CustomTextWidget.signInWith(context,
@@ -162,7 +161,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                         ],
                       ),
                       CustomWidget.spaceH(30),
-                      WelcomeWidget.startWithEmailOrPhoneButton(
+                      WelcomeWidget().startWithEmailOrPhoneButton(
                         context,
                         onPressed: () {
                           Navigator.pushNamed(context, '/sign_up');

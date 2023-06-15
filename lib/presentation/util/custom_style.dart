@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'package:food_hub_app/presentation/util/util.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomStyle {
   static final fontApp = 'shareFontApp'.tr();
@@ -88,6 +87,44 @@ class CustomStyle {
 
   // Button Style
 
+  static ButtonStyle buttonFilterHome = const ButtonStyle(
+    backgroundColor: MaterialStatePropertyAll(
+      AppColors.primaryBackgroundColor,
+    ),
+    minimumSize: MaterialStatePropertyAll(Size(0, 51)),
+    padding: MaterialStatePropertyAll(EdgeInsets.only(
+      top: 11,
+      bottom: 11,
+    )),
+    shape: MaterialStatePropertyAll(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+    ),
+  );
+
+  static ButtonStyle buttonOpenDrawerAppBar() => const ButtonStyle(
+        backgroundColor: MaterialStatePropertyAll(
+          AppColors.primaryBackgroundColor,
+        ),
+        shape: MaterialStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+          ),
+        ),
+        minimumSize: MaterialStatePropertyAll(Size(0, 40)),
+        padding: MaterialStatePropertyAll(
+          EdgeInsets.only(
+            left: 16,
+            right: 16,
+          ),
+        ),
+      );
+
   static ButtonStyle buttonAuthSocial(BuildContext context) => ButtonStyle(
         padding: const MaterialStatePropertyAll(EdgeInsets.only(left: 15)),
         backgroundColor: const MaterialStatePropertyAll<Color>(
@@ -156,6 +193,39 @@ class CustomStyle {
   );
 
   // Text Form Field Style
+
+  InputDecoration textSearchHome = InputDecoration(
+      prefixIcon: const Icon(Icons.search),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(
+            10,
+          ),
+        ),
+        borderSide: BorderSide(
+          width: 1,
+          color: AppColors.textColor.withOpacity(0.3),
+        ),
+      ),
+      focusedBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(
+            10,
+          ),
+        ),
+        borderSide: BorderSide(
+          width: 1,
+          color: AppColors.primaryColor,
+        ),
+      ),
+      border: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(
+            10,
+          ),
+        ),
+      ),
+      hintText: "homeTextFieldHint".tr());
 
   static InputDecoration textFieldStyle(BuildContext context) =>
       const InputDecoration(

@@ -12,7 +12,6 @@ import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widg
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
 import 'package:food_hub_app/presentation/view/login/widgets/login_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});

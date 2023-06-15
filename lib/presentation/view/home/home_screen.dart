@@ -1,16 +1,20 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:food_hub_app/presentation/util/custom_style.dart';
 import 'package:food_hub_app/presentation/util/util.dart';
-import 'package:food_hub_app/presentation/view/home/datas/food_item.dart';
-import 'package:food_hub_app/presentation/view/home/widgets/drawer_menu_widget.dart';
-import 'package:food_hub_app/presentation/view/login/widgets/login_widget.dart';
+import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
+import 'package:food_hub_app/presentation/view/home/datas/bottom_navigator_bar_item.dart';
+import 'package:food_hub_app/presentation/view/home/datas/feature_item.dart';
+import 'package:food_hub_app/presentation/view/home/widgets/category_widget.dart';
 
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:food_hub_app/presentation/view/home/widgets/feature_restaurant.dart';
+import 'package:food_hub_app/presentation/view/home/widgets/home_widgets.dart';
+import 'package:food_hub_app/presentation/view/login/widgets/login_widget.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   final VoidCallback openDrawer;
@@ -56,7 +60,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           exit(0);
         } else {
           Fluttertoast.showToast(
-            msg: AppLocalizations.of(context)?.messageExit ?? "",
+            msg: 'shareDialogMessageExit'.tr(),
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
@@ -64,66 +68,38 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             textColor: AppColors.primaryTitleColor,
             fontSize: 16.0,
           );
-          // var snackBar = const SnackBar(
-          //     content:
-          //         Center(child: Text('press another time to exit from app')));
-          // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
           return false;
         }
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(left: 20, top: 30, right: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    DrawerMenuWidget(onClicked: widget.openDrawer),
-                    _buildChooseAddress(),
-                    SizedBox(
-                      height: 38,
-                      width: 38,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: user?.photoURL == null
-                            ? Image.asset(
-                                "assets/images/home_screen_images/app_bar_avatar.png",
-                              )
-                            : Image.network(user?.photoURL ?? ""),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                const Text(
-                  "What would you like\nto order",
-                  style: TextStyle(
+                HomeWidgets().appBarHomePage(widget.openDrawer, user!),
+                CustomWidget.spaceH(25),
+                Text(
+                  "homeTextTitle".tr(),
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 32,
                   ),
                 ),
-                const SizedBox(
-                  height: 25,
-                ),
+                CustomWidget.spaceH(25),
                 _buildFindFoodAndFilter(),
-                const SizedBox(
-                  height: 25,
-                ),
+                CustomWidget.spaceH(25),
                 const CategoriesWidget(),
-                const SizedBox(
-                  height: 15,
-                ),
+                CustomWidget.spaceH(15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "Featured Restaurants",
-                      style: TextStyle(
+                    Text(
+                      "homeTextFeatureRes".tr(),
+                      style: const TextStyle(
                           fontFamily: 'Sofia Pro',
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
@@ -133,21 +109,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           foregroundColor:
                               MaterialStatePropertyAll(AppColors.primaryColor)),
                       onPressed: () {},
-                      child: const Text(
-                        "View All >",
-                        style: TextStyle(fontFamily: 'Sofia Pro'),
+                      child: Text(
+                        "homeTextViewAll".tr(),
+                        style: const TextStyle(fontFamily: 'Sofia Pro'),
                       ),
                     ),
                   ],
                 ),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Row(children: [
-                    _featuredRestaurants(),
-                    _featuredRestaurants(),
-                    _featuredRestaurants(),
-                    _featuredRestaurants(),
-                  ]),
+                  child: Row(
+                    children: List.generate(
+                      FeatureItems.all.length,
+                      (index) => FeatureRestaurantWidget(
+                        featureItemModel: FeatureItems.all[index],
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -156,144 +134,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         bottomNavigationBar: BottomNavigationBar(
           showSelectedLabels: false,
           showUnselectedLabels: false,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                  "assets/images/home_screen_images/bottom_icons/icon1_off.svg"),
-              activeIcon: SvgPicture.asset(
-                  "assets/images/home_screen_images/bottom_icons/icon1_on.svg"),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                  "assets/images/home_screen_images/bottom_icons/icon2_off.svg"),
-              activeIcon: SvgPicture.asset(
-                  "assets/images/home_screen_images/bottom_icons/icon2_on.svg"),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Stack(
-                children: [
-                  SvgPicture.asset(
-                      "assets/images/home_screen_images/bottom_icons/icon3_off.svg"),
-                  Container(
-                    margin: const EdgeInsets.only(left: 18, bottom: 15),
-                    padding: const EdgeInsets.all(1),
-                    decoration: BoxDecoration(
-                      color: AppColors.notification,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    constraints: const BoxConstraints(
-                      minWidth: 12,
-                      minHeight: 12,
-                    ),
-                    child: const Text(
-                      '4',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 8,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  )
-                ],
-              ),
-              activeIcon: Stack(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(
-                      top: 5,
-                    ),
-                    child: SvgPicture.asset(
-                        "assets/images/home_screen_images/bottom_icons/icon3_on.svg"),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 18, bottom: 15),
-                    padding: const EdgeInsets.all(1),
-                    decoration: BoxDecoration(
-                      color: AppColors.notification,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    constraints: const BoxConstraints(
-                      minWidth: 12,
-                      minHeight: 12,
-                    ),
-                    child: const Text(
-                      '4',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 8,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  )
-                ],
-              ),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                  "assets/images/home_screen_images/bottom_icons/icon4_off.svg"),
-              activeIcon: SvgPicture.asset(
-                  "assets/images/home_screen_images/bottom_icons/icon4_on.svg"),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Stack(
-                children: [
-                  SvgPicture.asset(
-                      "assets/images/home_screen_images/bottom_icons/icon5_off.svg"),
-                  Container(
-                    margin: const EdgeInsets.only(left: 18, bottom: 15),
-                    padding: const EdgeInsets.all(1),
-                    decoration: BoxDecoration(
-                      color: AppColors.notification,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    constraints: const BoxConstraints(
-                      minWidth: 12,
-                      minHeight: 12,
-                    ),
-                    child: const Text(
-                      '4',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 8,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  )
-                ],
-              ),
-              activeIcon: Stack(
-                children: [
-                  SvgPicture.asset(
-                      "assets/images/home_screen_images/bottom_icons/icon5_on.svg"),
-                  Container(
-                    margin: const EdgeInsets.only(left: 25),
-                    padding: const EdgeInsets.all(1),
-                    decoration: BoxDecoration(
-                      color: AppColors.notification,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    constraints: const BoxConstraints(
-                      minWidth: 12,
-                      minHeight: 12,
-                    ),
-                    child: const Text(
-                      '4',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 8,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  )
-                ],
-              ),
-              label: 'Home',
-            ),
-          ],
+          type: BottomNavigationBarType.fixed,
+          items: BottomNatigatorItems().all(),
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.amber[800],
           onTap: _onItemTapped,
@@ -302,46 +144,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildChooseAddress() {
-    return Container(
-      margin: const EdgeInsets.only(top: 20, bottom: 15),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              const Text(
-                "Deliver to",
-                style: TextStyle(
-                  fontSize: 12,
-                  color: AppColors.textColor,
-                ),
-              ),
-              const SizedBox(width: 5),
-              SvgPicture.asset(
-                  "assets/images/home_screen_images/icon_down.svg"),
-            ],
-          ),
-          const SizedBox(height: 5),
-          const Text(
-            "4102 Pretty View Lane",
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-              color: AppColors.primaryColor,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildFindFoodAndFilter() {
     return Row(
       children: [
         Expanded(flex: 5, child: _buildFindFood()),
-        const SizedBox(
-          width: 30,
-        ),
+        CustomWidget.spaceW(20),
         Expanded(flex: 1, child: _buildFilter()),
       ],
     );
@@ -349,38 +156,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget _buildFindFood() {
     return TextField(
-      decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.search),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(
-                10,
-              ),
-            ),
-            borderSide: BorderSide(
-              width: 1,
-              color: AppColors.textColor.withOpacity(0.3),
-            ),
-          ),
-          focusedBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(
-                10,
-              ),
-            ),
-            borderSide: BorderSide(
-              width: 1,
-              color: AppColors.primaryColor,
-            ),
-          ),
-          border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(
-                10,
-              ),
-            ),
-          ),
-          hintText: "Find for food or restaurant..."),
+      decoration: CustomStyle().textSearchHome,
       style: const TextStyle(
         fontSize: 12,
         fontFamily: 'Sofia Pro',
@@ -391,316 +167,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget _buildFilter() {
     return ElevatedButton(
       onPressed: () {},
-      style: const ButtonStyle(
-        backgroundColor: MaterialStatePropertyAll(
-          AppColors.primaryBackgroundColor,
-        ),
-        minimumSize: MaterialStatePropertyAll(Size(0, 50)),
-        shape: MaterialStatePropertyAll(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(15),
-            ),
-          ),
-        ),
-      ),
-      child: SvgPicture.asset(
-        "assets/images/home_screen_images/filter_icon.svg",
-        color: AppColors.primaryColor,
-      ),
-    );
-  }
-
-  Widget _featuredRestaurants() {
-    return Container(
-      padding: const EdgeInsets.only(bottom: 10, right: 10),
-      width: 250,
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 1,
-            blurRadius: 3,
-          ),
-        ],
-        color: AppColors.primaryBackgroundColor,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
-                child: Image.asset(
-                  "assets/images/home_screen_images/feature_images/feature1.jpg",
-                  fit: BoxFit.fill,
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 10, left: 10),
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryBackgroundColor,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      children: [
-                        const Text(
-                          "4.5",
-                          style: TextStyle(
-                            color: AppColors.textColor1,
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 1, left: 5),
-                          child: Image.asset(
-                            "assets/images/home_screen_images/feature_images/star_icon.jpg",
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 3, left: 5),
-                          child: Text("(25+)",
-                              style: TextStyle(
-                                fontFamily: 'Sofia Pro',
-                                fontSize: 10,
-                              )),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Image.asset(
-                      "assets/images/home_screen_images/feature_images/heart.jpg",
-                      height: 15,
-                      fit: BoxFit.fill,
-                      color: AppColors.primaryBackgroundColor,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              children: [
-                const Text(
-                  "McDonald's",
-                  style: TextStyle(
-                      fontFamily: 'Sofia Pro',
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Image.asset(
-                    "assets/images/home_screen_images/feature_images/vefifi_icon.jpg",
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 10,
-            ),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    right: 5,
-                  ),
-                  child: Image.asset(
-                    "assets/images/home_screen_images/feature_images/delivery_icon.jpg",
-                  ),
-                ),
-                const Text(
-                  "Free delivery",
-                  style: TextStyle(
-                    fontFamily: 'Sofia Pro',
-                    fontSize: 12,
-                    color: AppColors.textColor,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 10,
-                    right: 5,
-                  ),
-                  child: Image.asset(
-                    "assets/images/home_screen_images/feature_images/time_icon.jpg",
-                  ),
-                ),
-                const Text(
-                  "10-15 mins",
-                  style: TextStyle(
-                    fontFamily: 'Sofia Pro',
-                    fontSize: 12,
-                    color: AppColors.textColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(top: 10, left: 10),
-                padding: const EdgeInsets.only(
-                    left: 10, right: 10, top: 5, bottom: 5),
-                decoration: BoxDecoration(
-                  color: AppColors.textColor.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: const Text(
-                  "BURGER",
-                  style: TextStyle(
-                    color: AppColors.textColor1,
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 10, left: 10),
-                padding: const EdgeInsets.only(
-                    left: 10, right: 10, top: 5, bottom: 5),
-                decoration: BoxDecoration(
-                  color: AppColors.textColor.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: const Text(
-                  "CHICKEN",
-                  style: TextStyle(
-                    color: AppColors.textColor1,
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 10, left: 10),
-                padding: const EdgeInsets.only(
-                    left: 10, right: 10, top: 5, bottom: 5),
-                decoration: BoxDecoration(
-                  color: AppColors.textColor.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: const Text(
-                  "FAST FOOD",
-                  style: TextStyle(
-                    color: AppColors.textColor1,
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class CategoriesWidget extends StatefulWidget {
-  const CategoriesWidget({super.key});
-
-  @override
-  State<CategoriesWidget> createState() => _CategoriesWidgetState();
-}
-
-class _CategoriesWidgetState extends State<CategoriesWidget> {
-  int _valueClick = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 150,
-      child: ListView.builder(
-        itemCount: FoodItems.all.length,
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return Row(
-            children: [
-              SizedBox(
-                  width: 70,
-                  height: 120,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(
-                        _valueClick == index
-                            ? AppColors.primaryColor
-                            : AppColors.primaryBackgroundColor,
-                      ),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(40.0),
-                        ),
-                      ),
-                      padding: const MaterialStatePropertyAll(
-                        EdgeInsets.only(left: 5, right: 5, top: 5),
-                      ),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _valueClick = index;
-                      });
-                    },
-                    child: _buildfoodCategory(FoodItems.all[index].icon,
-                        FoodItems.all[index].title, _valueClick == index),
-                  )),
-              const SizedBox(
-                width: 10,
-              )
-            ],
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildfoodCategory(String image, String title, bool isClick) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 60,
-          width: 60,
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(60)),
-            child: Image.asset(
-              image,
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        Text(title,
-            style: TextStyle(
-                fontSize: 12,
-                color: isClick
-                    ? AppColors.primaryBackgroundColor
-                    : AppColors.textColor1)),
-      ],
+      style: CustomStyle.buttonFilterHome,
+      child: ImagePaths.filterHome,
     );
   }
 }

@@ -1,14 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:food_hub_app/presentation/util/custom_style.dart';
-import 'package:food_hub_app/presentation/util/l10n/l10n.dart';
 import 'package:food_hub_app/presentation/util/util.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 
 class WelcomeWidget {
-  static Widget skipButtonWidget(BuildContext context,
+  Widget skipButtonWidget(BuildContext context,
       {required VoidCallback onPress}) {
     return CustomButtonWidget.customButton(
       marginButton: const EdgeInsets.only(right: 27.5, top: 30),
@@ -21,7 +20,7 @@ class WelcomeWidget {
     );
   }
 
-  static Widget chooseLanguage(
+  Widget chooseLanguage(
       {TextEditingController? textEditingController,
       Function(String)? onChanged}) {
     return Container(
@@ -30,7 +29,6 @@ class WelcomeWidget {
       width: 100,
       child: CustomDropdown(
         borderRadius: BorderRadius.circular(30),
-        hintText: 'choose',
         items: const ['vn', 'en'],
         controller: textEditingController!,
         onChanged: onChanged,
@@ -38,7 +36,7 @@ class WelcomeWidget {
     );
   }
 
-  static Widget titleWelcome(BuildContext context) {
+  Widget titleWelcome(BuildContext context) {
     return Center(
       child: RichText(
         text: TextSpan(
@@ -65,7 +63,7 @@ class WelcomeWidget {
     );
   }
 
-  static Widget startWithEmailOrPhoneButton(BuildContext context,
+  Widget startWithEmailOrPhoneButton(BuildContext context,
       {required VoidCallback onPressed}) {
     return OutlinedButton(
       style: CustomStyle.buttonStartEmailorPhone(context),

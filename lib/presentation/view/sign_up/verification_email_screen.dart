@@ -12,7 +12,6 @@ import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart
 import 'package:food_hub_app/presentation/view/home/food_hub_screen.dart';
 import 'package:food_hub_app/presentation/view/login/widgets/login_widget.dart';
 import 'package:food_hub_app/presentation/view/sign_up/widgets/sign_up_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class VerificationEmailScreen extends ConsumerStatefulWidget {
   const VerificationEmailScreen({super.key});

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
 import 'package:food_hub_app/presentation/util/custom_style.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class CustomTextWidget {
   static Widget textCustom({

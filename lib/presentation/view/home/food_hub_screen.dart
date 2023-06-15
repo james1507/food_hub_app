@@ -1,13 +1,17 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_hub_app/presentation/controller/auth_phone_controller.dart';
 import 'package:food_hub_app/presentation/util/app_colors.dart';
 import 'package:food_hub_app/presentation/controller/auth_controller.dart';
+import 'package:food_hub_app/presentation/util/image_paths.dart';
 import 'package:food_hub_app/presentation/view/home/datas/drawer_item.dart';
 import 'package:food_hub_app/presentation/view/home/home_screen.dart';
 import 'package:food_hub_app/presentation/view/home/my_order_screen.dart';
+import 'package:food_hub_app/presentation/view/home/settings_screen.dart';
 import 'package:food_hub_app/presentation/view/home/widgets/drawer_widget.dart';
+import 'package:food_hub_app/presentation/view/home/widgets/home_widgets.dart';
 import 'package:food_hub_app/presentation/view/login/login_screen.dart';
 
 class FoodHubScreen extends ConsumerStatefulWidget {
@@ -23,8 +27,8 @@ class _FoodHubScreenState extends ConsumerState<FoodHubScreen> {
   late double yOffset;
   late double scaleFactor;
   late bool isDrawerOpen;
-  DrawerItemModel item = DrawerItems.home;
-  DrawerItemModel itemLogout = DrawerItems.logout;
+  DrawerItemModel itemChoose = DrawerItems().home;
+
   bool isDragging = false;
 
   User? user = FirebaseAuth.instance.currentUser;
@@ -53,123 +57,12 @@ class _FoodHubScreenState extends ConsumerState<FoodHubScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           buildDrawer(),
           buildHomePage(),
         ],
-      ),
-    );
-  }
-
-  Widget buildDrawer() {
-    return SizedBox(
-      width: 230,
-      child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: const EdgeInsets.only(
-                left: 25,
-                top: 50,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(50.0),
-                    child: user?.photoURL == null
-                        ? Image.asset(
-                            "assets/images/home_screen_images/big_avatar.jpg",
-                          )
-                        : Image.network(user?.photoURL ?? ""),
-                  ),
-                  Text(
-                    user?.displayName ?? "Username",
-                    style: const TextStyle(
-                        fontFamily: 'Sofia Pro',
-                        fontSize: 20,
-                        color: AppColors.welcomeSubtitleColor,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    user?.email != null
-                        ? user?.email ?? "Email"
-                        : user?.phoneNumber ?? "Phone Number",
-                    style: const TextStyle(
-                      fontFamily: 'Sofia Pro',
-                      fontSize: 14,
-                      color: AppColors.textColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            DrawerWidget(
-              onSelectItem: (item) {
-                switch (item) {
-                  case DrawerItems.logout:
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(const SnackBar(content: Text("Log out")));
-                    return;
-                  default:
-                    setState(() {
-                      this.item = item;
-                      closeDrawer();
-                    });
-                }
-              },
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 40, left: 40, right: 40),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: const MaterialStatePropertyAll<Color>(
-                    AppColors.primaryColor,
-                  ),
-                  shape: MaterialStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                  ),
-                  minimumSize:
-                      const MaterialStatePropertyAll<Size>(Size(100, 40)),
-                ),
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                    builder: (context) {
-                      return const LoginScreen();
-                    },
-                  ), ModalRoute.withName('/welcome'));
-                  ref.read(authControllerProvider.notifier).logout();
-                  ref.read(authPhoneControllerProvider.notifier).logout();
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.power_settings_new_sharp,
-                      color: AppColors.primaryTextColor,
-                    ),
-                    const SizedBox(
-                      width: 2,
-                    ),
-                    Text(
-                      itemLogout.title,
-                      style: const TextStyle(
-                        fontFamily: 'Sofia Pro',
-                        color: AppColors.primaryTextColor,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -217,13 +110,87 @@ class _FoodHubScreenState extends ConsumerState<FoodHubScreen> {
     );
   }
 
+  Widget buildDrawer() {
+    return SizedBox(
+      width: 230,
+      child: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(
+                  left: 25,
+                  top: 50,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(50.0),
+                      child: user?.photoURL == null
+                          ? ImagePaths.bigAvatarHome
+                          : Image.network(user?.photoURL ?? ""),
+                    ),
+                    Text(
+                      user?.displayName ?? "Username",
+                      style: const TextStyle(
+                          fontFamily: 'Sofia Pro',
+                          fontSize: 20,
+                          color: AppColors.welcomeSubtitleColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      user?.email != null
+                          ? user?.email ?? "Email"
+                          : user?.phoneNumber ?? "Phone Number",
+                      style: const TextStyle(
+                        fontFamily: 'Sofia Pro',
+                        fontSize: 14,
+                        color: AppColors.textColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              DrawerWidget(
+                onSelectItem: (item) {
+                  if (item == DrawerItems().logout) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("drawerTextLogOut".tr())));
+                    return;
+                  } else {
+                    setState(() {
+                      itemChoose = item;
+                      closeDrawer();
+                    });
+                  }
+                },
+              ),
+              HomeWidgets().buttonLogoutHome(
+                context,
+                () {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/login', ModalRoute.withName('/welcome'));
+
+                  ref.read(authControllerProvider.notifier).logout();
+                  ref.read(authPhoneControllerProvider.notifier).logout();
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget getDrawerPage() {
-    switch (item) {
-      case DrawerItems.myOrder:
-        return MyOrderPage(openDrawer: openDrawer);
-      case DrawerItems.home:
-      default:
-        return HomeScreen(openDrawer: openDrawer);
+    if (itemChoose.title == DrawerItems().myOrder.title) {
+      return MyOrderPage(openDrawer: openDrawer);
+    } else if (itemChoose.title == DrawerItems().settings.title) {
+      return SettingsScreen(openDrawer: openDrawer);
+    } else {
+      return HomeScreen(openDrawer: openDrawer);
     }
   }
 }

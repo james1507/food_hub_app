@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:food_hub_app/data/notification/firebase_notification.dart';
 import 'package:food_hub_app/data/notification/local_notification.dart';
 import 'package:food_hub_app/firebase_options.dart';

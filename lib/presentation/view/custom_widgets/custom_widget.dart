@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:food_hub_app/presentation/util/util.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class CustomWidget {
   static Widget lineSignIn(Color color) {

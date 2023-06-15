@@ -9,7 +9,6 @@ import 'package:food_hub_app/presentation/view/custom_widgets/custom_button_widg
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_text_widget.dart';
 import 'package:food_hub_app/presentation/view/custom_widgets/custom_widget.dart';
 import 'package:food_hub_app/presentation/view/phone_registration/widgets/phone_res_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 List<String> listCountryCode = <String>['VN', 'KR', 'JP', 'US'];
 List<Map<String, String>> listCountryCodePhone = [
