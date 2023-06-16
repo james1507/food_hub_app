@@ -12,7 +12,6 @@ import 'package:food_hub_app/presentation/view/home/my_order_screen.dart';
 import 'package:food_hub_app/presentation/view/home/settings_screen.dart';
 import 'package:food_hub_app/presentation/view/home/widgets/drawer_widget.dart';
 import 'package:food_hub_app/presentation/view/home/widgets/home_widgets.dart';
-import 'package:food_hub_app/presentation/view/login/login_screen.dart';
 
 class FoodHubScreen extends ConsumerStatefulWidget {
   const FoodHubScreen({super.key});

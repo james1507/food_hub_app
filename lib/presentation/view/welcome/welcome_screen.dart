@@ -93,8 +93,6 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                       WelcomeWidget().chooseLanguage(
                           textEditingController: languageChoose,
                           onChanged: (lang) {
-                            print(lang);
-
                             if (lang == 'en') {
                               context.setLocale(const Locale('en'));
                             } else if (lang == 'vn') {

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:food_hub_app/presentation/util/app_colors.dart';
 import 'package:food_hub_app/presentation/util/image_paths.dart';
 import 'package:food_hub_app/presentation/view/home/widgets/home_widgets.dart';
 

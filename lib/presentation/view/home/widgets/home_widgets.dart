@@ -137,7 +137,7 @@ class HomeWidgets {
           ),
           child: Text(
             notiTimes,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 8,
             ),
